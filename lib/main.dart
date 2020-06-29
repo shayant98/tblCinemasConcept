@@ -1,7 +1,10 @@
-import 'package:bltCinemas/ui/views/home/home_view.dart';
+import 'package:bltCinemas/app/locator.dart';
+import 'package:bltCinemas/app/router.gr.dart';
 import 'package:flutter/material.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 void main() {
+  setupLocator();
   runApp(MyApp());
 }
 
@@ -11,7 +14,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      home: HomeView(),
+      initialRoute: Routes.startupViewRoute,
+      onGenerateRoute: Router().onGenerateRoute,
+      navigatorKey: locator<NavigationService>().navigatorKey,
     );
   }
 }
