@@ -11,8 +11,8 @@ import 'package:bltCinemas/ui/views/startup/startup_view.dart';
 import 'package:bltCinemas/ui/views/home/home_view.dart';
 
 abstract class Routes {
-  static const startupViewRoute = '/';
-  static const homeViewRoute = '/home-view-route';
+  static const startupViewRoute = '/startup-view-route';
+  static const homeViewRoute = '/';
   static const all = {
     startupViewRoute,
     homeViewRoute,

@@ -13,8 +13,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      initialRoute: Routes.startupViewRoute,
+      themeMode: ThemeMode.light,
+      theme: ThemeData(
+        splashColor: Colors.orange[600],
+        scaffoldBackgroundColor: Color(0xFF121212),
+        appBarTheme: AppBarTheme(color: Color(0xFF262626)),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: Colors.orange[600],
+          splashColor: Colors.white24,
+        ),
+      ),
+      initialRoute: Routes.homeViewRoute,
       onGenerateRoute: Router().onGenerateRoute,
       navigatorKey: locator<NavigationService>().navigatorKey,
     );

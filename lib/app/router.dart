@@ -4,7 +4,7 @@ import 'package:bltCinemas/ui/views/startup/startup_view.dart';
 
 @MaterialAutoRouter()
 class $Router {
-  @initial
   StartupView startupViewRoute;
+  @initial
   HomeView homeViewRoute;
 }

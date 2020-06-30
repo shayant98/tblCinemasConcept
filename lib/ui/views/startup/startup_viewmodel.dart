@@ -7,7 +7,7 @@ class StartupViewModel extends BaseViewModel {
   final NavigationService _navigationService = locator<NavigationService>();
 
   Future navigateToHome() async {
-    await _navigationService.navigateTo(Routes.homeViewRoute);
+    _navigationService.replaceWith(Routes.homeViewRoute);
   }
 
   init() {
