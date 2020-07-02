@@ -108,6 +108,7 @@ class CarouselItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      fit: StackFit.passthrough,
       children: <Widget>[
         Image(
           image: NetworkImage(

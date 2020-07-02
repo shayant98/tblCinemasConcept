@@ -28,8 +28,7 @@ class MovieItemWidget extends StatelessWidget {
                       child: Image(
                           width: MediaQuery.of(context).size.width * 0.40,
                           fit: BoxFit.cover,
-                          image: NetworkImage(
-                              'https://images.wallpapersden.com/image/download/bloodshot-movie-4k-poster_68757_6072x9000.jpg'))),
+                          image: AssetImage('assets/images/lion_king.jpg'))),
                   Padding(
                     padding: EdgeInsets.only(top: 8.0, left: 8),
                     child: Text(

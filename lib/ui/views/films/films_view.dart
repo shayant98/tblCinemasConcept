@@ -56,16 +56,25 @@ class CategoryButtonWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              categoryName.toUpperCase(),
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle1
-                  .copyWith(color: Colors.orange[600]),
+              categoryName,
+              style: Theme.of(context).textTheme.headline6.copyWith(
+                    color: Colors.white,
+                  ),
             ),
-            Icon(
-              FontAwesomeIcons.angleRight,
-              color: Colors.orange[600],
-            ),
+            Row(
+              children: <Widget>[
+                Text(
+                  "View More",
+                  style: Theme.of(context).textTheme.subtitle2.copyWith(
+                        color: Colors.orange[600],
+                      ),
+                ),
+                Icon(
+                  FontAwesomeIcons.angleRight,
+                  color: Colors.orange[600],
+                ),
+              ],
+            )
           ],
         ),
       ),

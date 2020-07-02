@@ -1,5 +1,6 @@
 import 'package:bltCinemas/app/locator.dart';
 import 'package:bltCinemas/app/router.gr.dart';
+import 'package:bltCinemas/app/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -17,9 +18,11 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       themeMode: ThemeMode.light,
       theme: ThemeData(
+        brightness: Brightness.dark,
         splashColor: Colors.orange[600],
         scaffoldBackgroundColor: Color(0xFF121212),
         primaryColor: Color(0xFF121212),
+        textTheme: textTheme,
         appBarTheme: AppBarTheme(
           color: Color(0xFF262626),
         ),
