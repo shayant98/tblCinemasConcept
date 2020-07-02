@@ -1,4 +1,4 @@
-import 'package:bltCinemas/ui/dumb_widgets/movie_item.dart';
+import 'package:bltCinemas/ui/smart_widgets/movies_item/movie_item_view.dart';
 import 'package:bltCinemas/ui/dumb_widgets/movies_carousel.dart';
 import 'package:bltCinemas/ui/views/dashboard/dashboard_viewmodel.dart';
 import 'package:carousel_pro/carousel_pro.dart';

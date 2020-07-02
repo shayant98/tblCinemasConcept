@@ -1,4 +1,5 @@
 import 'package:bltCinemas/model/bottom_menu_items_model.dart';
+import 'package:bltCinemas/ui/dumb_widgets/appbar_search.dart';
 import 'package:bltCinemas/ui/views/home/home_viewmodel.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +14,9 @@ class HomeView extends StatelessWidget {
         appBar: AppBar(
           leading: Padding(
             padding: const EdgeInsets.only(left: 8.0),
-            child: Image(
-                image: NetworkImage(
-                    'https://i.pinimg.com/originals/5a/c1/3d/5ac13df15c741c7e8db487e6946de180.png')),
+            child: Placeholder(
+              color: Colors.white,
+            ),
           ),
           title: Text(
             model.menuItems[model.selectedIndex].title.toUpperCase(),
@@ -25,10 +26,17 @@ class HomeView extends StatelessWidget {
           ),
           actions: <Widget>[
             IconButton(
+              icon: Icon(FontAwesomeIcons.search),
+              onPressed: () {
+                showSearch(context: context, delegate: AppbarSearch());
+              },
+              iconSize: 18,
+            ),
+            IconButton(
               icon: Icon(FontAwesomeIcons.cog),
               onPressed: () {},
               iconSize: 18,
-            )
+            ),
           ],
         ),
         body: model.menuItems[model.selectedIndex].view,

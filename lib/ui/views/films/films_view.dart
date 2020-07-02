@@ -23,13 +23,13 @@ class FilmsView extends StatelessWidget {
                   categoryName: model.categories[i],
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
                 MoviesCarousel(
                   movies: i + 1,
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 5,
                 )
               ],
             ),
@@ -56,10 +56,10 @@ class CategoryButtonWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              categoryName,
+              categoryName.toUpperCase(),
               style: Theme.of(context)
                   .textTheme
-                  .headline6
+                  .subtitle1
                   .copyWith(color: Colors.orange[600]),
             ),
             Icon(
