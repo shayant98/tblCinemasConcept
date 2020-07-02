@@ -9,13 +9,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:bltCinemas/ui/views/startup/startup_view.dart';
 import 'package:bltCinemas/ui/views/home/home_view.dart';
+import 'package:bltCinemas/ui/views/movie/movie_view.dart';
 
 abstract class Routes {
   static const startupViewRoute = '/startup-view-route';
   static const homeViewRoute = '/';
+  static const movieViewRoute = '/movie-view-route';
   static const all = {
     startupViewRoute,
     homeViewRoute,
+    movieViewRoute,
   };
 }
 
@@ -38,6 +41,11 @@ class Router extends RouterBase {
       case Routes.homeViewRoute:
         return MaterialPageRoute<dynamic>(
           builder: (context) => HomeView(),
+          settings: settings,
+        );
+      case Routes.movieViewRoute:
+        return MaterialPageRoute<dynamic>(
+          builder: (context) => MovieView(),
           settings: settings,
         );
       default:

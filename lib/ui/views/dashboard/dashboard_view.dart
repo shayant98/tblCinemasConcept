@@ -1,3 +1,5 @@
+import 'package:bltCinemas/ui/dumb_widgets/movie_item.dart';
+import 'package:bltCinemas/ui/dumb_widgets/movies_carousel.dart';
 import 'package:bltCinemas/ui/views/dashboard/dashboard_viewmodel.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
@@ -31,79 +33,10 @@ class DashboardView extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.30,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, int index) {
-                  for (var i = 0; i < 10; i++) return MovieItemWidget();
-                },
-                itemCount: 10,
-                separatorBuilder: (BuildContext context, int index) {
-                  return SizedBox(
-                    width: 10,
-                  );
-                },
-              ),
-            ),
-          )
+          MoviesCarousel()
         ],
       ),
       viewModelBuilder: () => DashboardViewModel(),
-    );
-  }
-}
-
-class MovieItemWidget extends StatelessWidget {
-  const MovieItemWidget({
-    Key key,
-  }) : super(key: key);
-// https://images.wallpapersden.com/image/download/bloodshot-movie-4k-poster_68757_6072x9000.jpg
-  @override
-  Widget build(BuildContext context) {
-    return Ink(
-      child: InkWell(
-        onTap: () {},
-        splashColor: Colors.orange[600],
-        child: Container(
-            margin: EdgeInsets.only(),
-            color: Color(0xFF262626),
-            height: MediaQuery.of(context).size.height * 0.35,
-            width: MediaQuery.of(context).size.width * 0.40,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                    child: Image(
-                        width: MediaQuery.of(context).size.width * 0.40,
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                            'https://images.wallpapersden.com/image/download/bloodshot-movie-4k-poster_68757_6072x9000.jpg'))),
-                Padding(
-                  padding: EdgeInsets.only(top: 8.0, left: 8),
-                  child: Text(
-                    "TITLE",
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle2
-                        .copyWith(color: Colors.orange[600]),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 8.0, left: 8),
-                  child: Text(
-                    "SUBTITLE",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        .copyWith(color: Colors.white),
-                  ),
-                ),
-              ],
-            )),
-      ),
     );
   }
 }
