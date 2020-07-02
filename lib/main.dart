@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
         splashColor: Colors.orange[600],
         scaffoldBackgroundColor: Color(0xFF121212),
         appBarTheme: AppBarTheme(color: Color(0xFF262626)),
+        accentColor: Colors.orange[600].withOpacity(0.4),
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           backgroundColor: Colors.orange[600],
           splashColor: Colors.white24,

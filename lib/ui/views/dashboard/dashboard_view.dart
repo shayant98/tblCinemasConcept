@@ -33,7 +33,9 @@ class DashboardView extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          MoviesCarousel()
+          MoviesCarousel(
+            movies: 3,
+          )
         ],
       ),
       viewModelBuilder: () => DashboardViewModel(),

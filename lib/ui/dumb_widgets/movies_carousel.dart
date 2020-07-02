@@ -2,9 +2,9 @@ import 'package:bltCinemas/ui/dumb_widgets/movie_item.dart';
 import 'package:flutter/material.dart';
 
 class MoviesCarousel extends StatelessWidget {
-  const MoviesCarousel({
-    Key key,
-  }) : super(key: key);
+  final int movies;
+
+  const MoviesCarousel({Key key, this.movies}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +15,9 @@ class MoviesCarousel extends StatelessWidget {
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
           itemBuilder: (BuildContext context, int index) {
-            for (var i = 0; i < 10; i++) return MovieItemWidget();
+            for (var i = 0; i < movies; i++) return MovieItemWidget();
           },
-          itemCount: 10,
+          itemCount: movies,
           separatorBuilder: (BuildContext context, int index) {
             return SizedBox(
               width: 10,

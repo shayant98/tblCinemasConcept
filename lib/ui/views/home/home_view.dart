@@ -18,7 +18,7 @@ class HomeView extends StatelessWidget {
                     'https://i.pinimg.com/originals/5a/c1/3d/5ac13df15c741c7e8db487e6946de180.png')),
           ),
           title: Text(
-            "HOME",
+            model.menuItems[model.selectedIndex].title.toUpperCase(),
             style: TextStyle(
               fontWeight: FontWeight.bold,
             ),
