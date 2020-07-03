@@ -19,8 +19,7 @@ class MovieItemWidget extends StatelessWidget {
           child: Container(
               margin: EdgeInsets.only(),
               color: Color(0xFF262626),
-              height: MediaQuery.of(context).size.height * 0.35,
-              width: MediaQuery.of(context).size.width * 0.40,
+              width: MediaQuery.of(context).size.width * 0.30,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[

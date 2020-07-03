@@ -1,6 +1,7 @@
 import 'package:bltCinemas/model/bottom_menu_items_model.dart';
 import 'package:bltCinemas/ui/views/dashboard/dashboard_view.dart';
 import 'package:bltCinemas/ui/views/films/films_view.dart';
+import 'package:bltCinemas/ui/views/ticket/ticket_view.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stacked/stacked.dart';
@@ -20,7 +21,7 @@ class HomeViewModel extends BaseViewModel {
     BottomMenuItemModel(
       icon: Icon(FontAwesomeIcons.ticketAlt),
       title: 'Tickets',
-      view: FilmsView(),
+      view: TicketView(),
     ),
     BottomMenuItemModel(
       icon: Icon(FontAwesomeIcons.user),

@@ -29,7 +29,7 @@ class FilmsView extends StatelessWidget {
                   movies: i + 1,
                 ),
                 SizedBox(
-                  height: 5,
+                  height: 30,
                 )
               ],
             ),
