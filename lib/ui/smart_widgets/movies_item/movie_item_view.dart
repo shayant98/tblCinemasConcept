@@ -1,12 +1,13 @@
+import 'package:bltCinemas/model/movie_model.dart';
 import 'package:bltCinemas/ui/smart_widgets/movies_item/movie_item_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 class MovieItemWidget extends StatelessWidget {
-  const MovieItemWidget({
-    Key key,
-  }) : super(key: key);
-// https://images.wallpapersden.com/image/download/bloodshot-movie-4k-poster_68757_6072x9000.jpg
+  final Movie movie;
+
+  const MovieItemWidget({Key key, @required this.movie}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MovieItemViewModel>.reactive(
@@ -31,7 +32,7 @@ class MovieItemWidget extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(top: 8.0, left: 8),
                     child: Text(
-                      "TITLE",
+                      movie.title,
                       style: Theme.of(context)
                           .textTheme
                           .subtitle2
@@ -41,7 +42,9 @@ class MovieItemWidget extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(bottom: 8.0, left: 8),
                     child: Text(
-                      "SUBTITLE",
+                      (movie.comingSoonDate != null)
+                          ? movie.comingSoonDate
+                          : "",
                       style: Theme.of(context)
                           .textTheme
                           .bodyText2

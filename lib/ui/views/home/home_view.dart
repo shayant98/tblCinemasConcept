@@ -13,11 +13,8 @@ class HomeView extends StatelessWidget {
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           leading: Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Placeholder(
-              color: Colors.white,
-            ),
-          ),
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Image(image: AssetImage("assets/images/tbl.png"))),
           title: Text(
             model.menuItems[model.selectedIndex].title.toUpperCase(),
             style: TextStyle(

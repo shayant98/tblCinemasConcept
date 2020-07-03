@@ -1,3 +1,4 @@
+import 'package:bltCinemas/services/api_service.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -7,4 +8,5 @@ abstract class ThirdPartyServicesModule {
   NavigationService get navigationService;
   @lazySingleton
   DialogService get dialogService;
+  ApiService get apiService;
 }

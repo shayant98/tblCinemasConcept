@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bltCinemas/model/movie_model.dart';
 import 'package:bltCinemas/ui/dumb_widgets/movies_carousel.dart';
 import 'package:bltCinemas/ui/views/films/films_viewmodel.dart';
 import 'package:flutter/foundation.dart';
@@ -25,9 +26,7 @@ class FilmsView extends StatelessWidget {
                 SizedBox(
                   height: 5,
                 ),
-                MoviesCarousel(
-                  movies: i + 1,
-                ),
+                buildMoviesCarousel(model.categories[i], model.movies),
                 SizedBox(
                   height: 30,
                 )
@@ -36,7 +35,24 @@ class FilmsView extends StatelessWidget {
         ],
       ),
       viewModelBuilder: () => FilmsViewModel(),
+      onModelReady: (model) => model.init(),
     );
+  }
+
+  Widget buildMoviesCarousel(String category, List<Movie> movies) {
+    List<Movie> categoryMovies = [];
+
+    for (Movie movie in movies) {
+      if (movie.categories.contains(category.toLowerCase())) {
+        categoryMovies..add(movie);
+      }
+    }
+
+    return categoryMovies.isEmpty
+        ? Container()
+        : MoviesCarousel(
+            movies: categoryMovies,
+          );
   }
 }
 
