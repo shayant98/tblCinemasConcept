@@ -15,7 +15,7 @@ class FilmsView extends StatelessWidget {
       builder: (context, model, child) => ListView(
         children: <Widget>[
           SizedBox(
-            height: 20,
+            height: 5,
           ),
           for (var i = 0; i < model.categories.length; i++)
             Column(
@@ -23,13 +23,7 @@ class FilmsView extends StatelessWidget {
                 CategoryButtonWidget(
                   categoryName: model.categories[i],
                 ),
-                SizedBox(
-                  height: 5,
-                ),
                 buildMoviesCarousel(model.categories[i], model.movies),
-                SizedBox(
-                  height: 30,
-                )
               ],
             ),
         ],
@@ -67,7 +61,7 @@ class CategoryButtonWidget extends StatelessWidget {
       onTap: () {},
       splashColor: Colors.orange[600].withOpacity(0.2),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[

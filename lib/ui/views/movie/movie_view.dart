@@ -42,6 +42,7 @@ class MovieView extends StatelessWidget {
         ),
       ),
       viewModelBuilder: () => MovieViewModel(),
+      onModelReady: (model) => model.init(),
     );
   }
 }
@@ -202,7 +203,7 @@ class Description extends ViewModelWidget<MovieViewModel> {
           ),
           AnimatedCrossFade(
             firstChild: Text(
-              "This Disney animated feature follows the adventures of the young lion Simba (Jonathan Taylor Thomas), the heir of his father, Mufasa (James Earl Jones). Simba's wicked uncle, Scar (Jeremy Irons), plots to usurp Mufasa's throne by luring father and son into a stampede of wildebeests. But Simba escapes, and only Mufasa is killed. Simba returns as an adult (Matthew Broderick) to take back his homeland from Scar with the help of his friends Timon (Nathan Lane) and Pumbaa (Ernie Sabella).",
+              model.currentMovie.desc,
               maxLines: 6,
               overflow: TextOverflow.fade,
               style: Theme.of(context).textTheme.bodyText2.copyWith(
@@ -210,7 +211,7 @@ class Description extends ViewModelWidget<MovieViewModel> {
                   ),
             ),
             secondChild: Text(
-              "This Disney animated feature follows the adventures of the young lion Simba (Jonathan Taylor Thomas), the heir of his father, Mufasa (James Earl Jones). Simba's wicked uncle, Scar (Jeremy Irons), plots to usurp Mufasa's throne by luring father and son into a stampede of wildebeests. But Simba escapes, and only Mufasa is killed. Simba returns as an adult (Matthew Broderick) to take back his homeland from Scar with the help of his friends Timon (Nathan Lane) and Pumbaa (Ernie Sabella).",
+              model.currentMovie.desc,
               overflow: TextOverflow.fade,
               style: Theme.of(context).textTheme.bodyText2.copyWith(
                     color: Colors.white,
@@ -250,34 +251,36 @@ class AppBarControls extends ViewModelWidget<MovieViewModel> {
   }
 }
 
-class MovieImage extends StatelessWidget {
+class MovieImage extends ViewModelWidget<MovieViewModel> {
   const MovieImage({
     Key key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.5,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-            fit: BoxFit.cover,
-            image: AssetImage('assets/images/lion_king.jpg')),
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(100),
+  Widget build(BuildContext context, MovieViewModel model) {
+    return Hero(
+      tag: model.currentMovie.id,
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.5,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              fit: BoxFit.cover, image: AssetImage(model.currentMovie.poster)),
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(100),
+          ),
         ),
       ),
     );
   }
 }
 
-class MovieTitle extends StatelessWidget {
+class MovieTitle extends ViewModelWidget<MovieViewModel> {
   const MovieTitle({
     Key key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, MovieViewModel model) {
     return Positioned(
       bottom: 0,
       child: Container(
@@ -298,7 +301,7 @@ class MovieTitle extends StatelessWidget {
           ),
         ),
         child: Text(
-          "The Lion King",
+          model.currentMovie.title,
           style: Theme.of(context).textTheme.headline3.copyWith(
                 color: Colors.white,
               ),

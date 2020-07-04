@@ -11,7 +11,8 @@ import 'package:get_it/get_it.dart';
 
 void $initGetIt(GetIt g, {String environment}) {
   final thirdPartyServicesModule = _$ThirdPartyServicesModule();
-  g.registerFactory<ApiService>(() => thirdPartyServicesModule.apiService);
+  g.registerLazySingleton<ApiService>(
+      () => thirdPartyServicesModule.apiService);
   g.registerLazySingleton<DialogService>(
       () => thirdPartyServicesModule.dialogService);
   g.registerLazySingleton<NavigationService>(

@@ -1,9 +1,19 @@
 import 'package:bltCinemas/app/locator.dart';
+import 'package:bltCinemas/model/movie_model.dart';
+import 'package:bltCinemas/services/api_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class MovieViewModel extends BaseViewModel {
-  NavigationService _navigationService = locator<NavigationService>();
+  ApiService _apiService = locator<ApiService>();
+
+  Movie _currentMovie;
+  Movie get currentMovie => _currentMovie;
+
+  init() {
+    _currentMovie = _apiService.getCurrentMovie();
+    print("${_apiService.getCurrentMovie()} TEST");
+  }
 
   bool _showFullDesc = false;
   bool get showFullDesc => _showFullDesc;

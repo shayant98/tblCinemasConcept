@@ -3,6 +3,7 @@ import 'package:bltCinemas/ui/dumb_widgets/movies_carousel.dart';
 import 'package:bltCinemas/ui/views/dashboard/dashboard_viewmodel.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stacked/stacked.dart';
 
 class DashboardView extends StatelessWidget {
@@ -18,6 +19,7 @@ class DashboardView extends StatelessWidget {
                 dotSize: 4.0,
                 dotIncreasedColor: Colors.orange,
                 indicatorBgPadding: 5.0,
+                dotVerticalPadding: 10,
                 dotBgColor: Colors.purple.withOpacity(0),
                 autoplayDuration: Duration(seconds: 3),
                 images: [
@@ -29,72 +31,53 @@ class DashboardView extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          OptionsTabWidget(),
-          SizedBox(
-            height: 20,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  "Now showing",
+                  style: Theme.of(context).textTheme.headline6.copyWith(
+                        color: Colors.white,
+                      ),
+                ),
+                Row(
+                  children: <Widget>[
+                    Text(
+                      "View More",
+                      style: Theme.of(context).textTheme.subtitle2.copyWith(
+                            color: Colors.orange[600],
+                          ),
+                    ),
+                    Icon(
+                      FontAwesomeIcons.angleRight,
+                      color: Colors.orange[600],
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
-          MoviesCarousel(movies: model.movies)
+          MoviesCarousel(movies: model.movies),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  "Find us",
+                  style: Theme.of(context).textTheme.headline6.copyWith(
+                        color: Colors.white,
+                      ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
       viewModelBuilder: () => DashboardViewModel(),
       onModelReady: (model) => model.init(),
-    );
-  }
-}
-
-class OptionsTabWidget extends StatelessWidget {
-  const OptionsTabWidget({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.center,
-      child: Container(
-        padding: EdgeInsets.all(4),
-        decoration: BoxDecoration(
-            color: Color(0xFF262626).withOpacity(0.6),
-            borderRadius: BorderRadius.circular(40)),
-        height: 40,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Ink(
-              child: InkWell(
-                borderRadius: BorderRadius.circular(40),
-                splashColor: Colors.orange,
-                onTap: () {},
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                  child: Center(
-                    child: Text("NOW SHOWING",
-                        style: Theme.of(context).textTheme.subtitle2.copyWith(
-                            color: Colors.orange[600],
-                            fontWeight: FontWeight.bold)),
-                  ),
-                ),
-              ),
-            ),
-            VerticalDivider(),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              decoration: BoxDecoration(
-                  color: Colors.orange[600],
-                  borderRadius: BorderRadius.circular(40)),
-              child: Center(
-                child: Text("COMING SOON",
-                    style: Theme.of(context).textTheme.subtitle2.copyWith(
-                        color: Colors.white, fontWeight: FontWeight.bold)),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
