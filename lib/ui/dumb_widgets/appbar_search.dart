@@ -31,6 +31,10 @@ class AppbarSearch extends SearchDelegate<String> {
   }
 
   @override
+  // TODO: implement searchFieldLabel
+  String get searchFieldLabel => "Search Movies";
+
+  @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
         icon: AnimatedIcon(
@@ -44,19 +48,11 @@ class AppbarSearch extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
-    throw UnimplementedError();
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
     List<Movie> allMovies = _apiService.getAllMovies();
-    List<Movie> suggestions = query.isEmpty
-        ? allMovies
-        : allMovies
-            .where((movie) =>
-                movie.title.toLowerCase().contains(query.toLowerCase()))
-            .toList();
+    List<Movie> suggestions = allMovies
+        .where(
+            (movie) => movie.title.toLowerCase().contains(query.toLowerCase()))
+        .toList();
     return ListView.separated(
       itemCount: suggestions.length,
       itemBuilder: (context, index) => ListTile(
@@ -69,5 +65,10 @@ class AppbarSearch extends SearchDelegate<String> {
           title: Text(suggestions[index].title)),
       separatorBuilder: (BuildContext context, int index) => Divider(),
     );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return Container();
   }
 }
