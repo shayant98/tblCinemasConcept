@@ -11,19 +11,16 @@ class MovieItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<MovieItemViewModel>.reactive(
-      builder: (context, model, child) => Ink(
-        child: InkWell(
-            onTap: () {
-              model.navigateToMovieScreen(movie);
-            },
-            splashColor: Colors.orange[600],
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.33,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  image: DecorationImage(image: AssetImage(movie.poster))),
-            )),
-      ),
+      builder: (context, model, child) => GestureDetector(
+          onTap: () {
+            model.navigateToMovieScreen(movie);
+          },
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.33,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                image: DecorationImage(image: AssetImage(movie.poster))),
+          )),
       viewModelBuilder: () => MovieItemViewModel(),
     );
   }

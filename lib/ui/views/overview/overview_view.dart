@@ -62,7 +62,7 @@ class DayList extends ViewModelWidget<OverviewViewModel> {
         color: Color(0xFF262626),
       ),
       child: ConstrainedBox(
-        constraints: new BoxConstraints(minHeight: 35.0, maxHeight: 50),
+        constraints: new BoxConstraints(minHeight: 35.0, maxHeight: 40),
         child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemBuilder: (_, index) => GestureDetector(
@@ -87,7 +87,10 @@ class DayList extends ViewModelWidget<OverviewViewModel> {
                       child: Center(
                         child: Text(
                           "Day $index",
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: Theme.of(context).textTheme.bodyText2.copyWith(
+                              fontWeight: index == model.selectedIndex
+                                  ? FontWeight.bold
+                                  : FontWeight.normal),
                         ),
                       ),
                     ),
@@ -138,10 +141,20 @@ class MoviesList extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Image(
-                fit: BoxFit.fitHeight,
-                image: AssetImage('assets/images/lion_king.jpg'),
-                width: 80,
+              Container(
+                height: 150,
+                child: MovieItemWidget(
+                  movie: Movie(
+                    id: "bleppppp",
+                    title: "the Lion King",
+                    desc:
+                        "This Disney animated feature follows the adventures of the young lion Simba (Jonathan Taylor Thomas), the heir of his father, Mufasa (James Earl Jones). Simba's wicked uncle, Scar (Jeremy Irons), plots to usurp Mufasa's throne by luring father and son into a stampede of wildebeests. But Simba escapes, and only Mufasa is killed. Simba returns as an adult (Matthew Broderick) to take back his homeland from Scar with the help of his friends Timon (Nathan Lane) and Pumbaa (Ernie Sabella).",
+                    nowShowing: true,
+                    comingSoon: false,
+                    poster: 'assets/images/lion_king.jpg',
+                    categories: ['action', 'kids', 'now showing'],
+                  ),
+                ),
               ),
               SizedBox(
                 width: 20,
@@ -157,34 +170,32 @@ class MoviesList extends StatelessWidget {
                           .subtitle1
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(
-                      height: 20,
+                    Text("2h 15min",
+                        style: Theme.of(context).textTheme.caption),
+                    Icon(
+                      FontAwesomeIcons.accessibleIcon,
+                      size: 12,
                     ),
-                    Wrap(
-                      spacing: 30,
-                      runSpacing: 10,
-                      children: <Widget>[
-                        TimeSlot(
+                    SizedBox(
+                      height: 40,
+                    ),
+                    LimitedBox(
+                      maxHeight: 60,
+                      child: ListView.separated(
+                        // spacing: 30,
+                        // runSpacing: 10,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (BuildContext context, int index) =>
+                            TimeSlot(
                           startTime: '23:00',
                           endTime: '01:15',
                         ),
-                        TimeSlot(
-                          startTime: '23:00',
-                          endTime: '01:15',
+                        itemCount: 3,
+                        separatorBuilder: (BuildContext context, int index) =>
+                            SizedBox(
+                          width: 10,
                         ),
-                        TimeSlot(
-                          startTime: '23:00',
-                          endTime: '01:15',
-                        ),
-                        TimeSlot(
-                          startTime: '23:00',
-                          endTime: '01:15',
-                        ),
-                        TimeSlot(
-                          startTime: '23:00',
-                          endTime: '01:15',
-                        ),
-                      ],
+                      ),
                     ),
                   ],
                 ),
@@ -193,7 +204,7 @@ class MoviesList extends StatelessWidget {
           ),
         );
       },
-      itemCount: 32,
+      itemCount: 7,
       separatorBuilder: (BuildContext context, int index) => Divider(),
     );
   }
@@ -208,31 +219,39 @@ class TimeSlot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Ink(
-        child: InkWell(
-          onTap: () {},
-          splashColor: Colors.orange[600],
-          borderRadius: BorderRadius.circular(10),
-          child: Container(
-            decoration: BoxDecoration(
-                color: Color(0xFF262626).withOpacity(0.7),
-                borderRadius: BorderRadius.circular(10)),
-            padding: EdgeInsets.all(8),
-            child: Column(
-              children: <Widget>[
-                Text(
-                  "$startTime-$endTime",
-                  style: Theme.of(context).textTheme.subtitle1,
+    return Ink(
+      child: InkWell(
+        onTap: () {},
+        splashColor: Colors.orange[600],
+        borderRadius: BorderRadius.circular(10),
+        child: Container(
+          decoration: BoxDecoration(
+              color: Color(0xFF262626).withOpacity(0.7),
+              borderRadius: BorderRadius.circular(10)),
+          padding: EdgeInsets.all(8),
+          child: Column(
+            children: <Widget>[
+              RichText(
+                text: TextSpan(
+                  text: "$startTime - ",
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle1
+                      .copyWith(fontWeight: FontWeight.bold),
+                  children: [
+                    TextSpan(
+                        text: endTime,
+                        style: Theme.of(context).textTheme.caption),
+                  ],
                 ),
-                Container(
-                  child: Text(
-                    type ?? '2D',
-                    style: Theme.of(context).textTheme.caption,
-                  ),
+              ),
+              Container(
+                child: Text(
+                  type ?? '2D',
+                  style: Theme.of(context).textTheme.bodyText2,
                 ),
-              ],
-            ),
+              )
+            ],
           ),
         ),
       ),
