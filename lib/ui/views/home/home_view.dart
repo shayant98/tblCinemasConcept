@@ -34,8 +34,13 @@ class HomeView extends StatelessWidget {
         body: model.menuItems[model.selectedIndex].view,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: Icon(Icons.calendar_today),
+          onPressed: () {
+            model.navigateToOverview();
+          },
+          child: Icon(
+            FontAwesomeIcons.calendar,
+            color: Colors.white,
+          ),
         ),
         bottomNavigationBar: BottomNavigation(),
       ),
@@ -64,6 +69,20 @@ class BottomNavigation extends ViewModelWidget<HomeViewModel> {
         unselectedItemColor: Colors.white,
         selectedItemColor: Colors.orange[600],
         iconSize: 18,
+      ),
+    );
+  }
+}
+
+class OverviewSheet extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        child: Column(
+          children: <Widget>[],
+        ),
       ),
     );
   }

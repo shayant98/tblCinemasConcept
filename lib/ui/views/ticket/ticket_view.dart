@@ -14,88 +14,122 @@ class TicketView extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: ListView.separated(
           itemBuilder: (BuildContext context, int index) {
-            for (var i = 0; i < 4; i++) {
-              return Container(
-                height: MediaQuery.of(context).size.height * 0.25,
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20)),
-                      width: MediaQuery.of(context).size.width * 0.60,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Image(
-                                width: 48,
-                                image: AssetImage('assets/images/tbl.png')),
-                            Flexible(
-                              child: Text(
-                                "The Lion King",
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline6
-                                    .copyWith(color: Colors.black),
-                              ),
-                            ),
-                            Text(
-                              "2h 15min",
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .caption
-                                  .copyWith(color: Colors.grey),
-                            ),
-                            Text(
-                              "Horror",
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .caption
-                                  .copyWith(color: Colors.grey),
-                            ),
-                            Divider(),
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                InfoContainer(
-                                  title: "Date",
-                                  value: "23/12/20",
-                                ),
-                                VerticalDivider(),
-                                InfoContainer(
-                                  title: "Time",
-                                  value: "23:00",
-                                ),
-                                VerticalDivider(),
-                                InfoContainer(
-                                  title: "Screen",
-                                  value: "1",
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    QrCode(),
-                  ],
-                ),
-              );
-            }
+            return Ticket();
           },
-          itemCount: 3,
+          itemCount: 4,
           separatorBuilder: (BuildContext context, int index) {
             return Divider();
           },
         ),
       )),
       viewModelBuilder: () => TicketViewModel(),
+    );
+  }
+}
+
+class Ticket extends ViewModelWidget<TicketViewModel> {
+  @override
+  Widget build(BuildContext context, TicketViewModel model) {
+    return GestureDetector(
+      onTap: () {
+        showModalBottomSheet(
+          context: context,
+          builder: (_) => Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20))),
+            height: MediaQuery.of(context).size.height * 0.75,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Center(
+                  child: QrImage(
+                    size: 250,
+                    data: "Suck ya muda",
+                  ),
+                ),
+                Text(
+                  "987654321",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.black),
+                )
+              ],
+            ),
+          ),
+        );
+      },
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.25,
+        child: Row(
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(20)),
+              width: MediaQuery.of(context).size.width * 0.60,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Image(
+                        width: 48, image: AssetImage('assets/images/tbl.png')),
+                    Flexible(
+                      child: Text(
+                        "The Lion King",
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6
+                            .copyWith(color: Colors.black),
+                      ),
+                    ),
+                    Text(
+                      "2h 15min",
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context)
+                          .textTheme
+                          .caption
+                          .copyWith(color: Colors.grey),
+                    ),
+                    Text(
+                      "Horror",
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context)
+                          .textTheme
+                          .caption
+                          .copyWith(color: Colors.grey),
+                    ),
+                    Divider(),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        InfoContainer(
+                          title: "Date",
+                          value: "23/12/20",
+                        ),
+                        VerticalDivider(),
+                        InfoContainer(
+                          title: "Time",
+                          value: "23:00",
+                        ),
+                        VerticalDivider(),
+                        InfoContainer(
+                          title: "Screen",
+                          value: "1",
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+            QrCode(),
+          ],
+        ),
+      ),
     );
   }
 }
