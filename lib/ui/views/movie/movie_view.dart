@@ -73,29 +73,27 @@ class Actors extends StatelessWidget {
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemBuilder: (BuildContext context, int index) {
-                for (var i = 0; i < 5; i++) {
-                  return Column(
-                    children: <Widget>[
-                      Expanded(
-                        child: CircleAvatar(
-                          minRadius: 35,
-                          maxRadius: 45,
-                          backgroundImage: AssetImage(
-                              'assets/images/the_ultimate_actor.jpg'),
-                        ),
+                return Column(
+                  children: <Widget>[
+                    Expanded(
+                      child: CircleAvatar(
+                        minRadius: 35,
+                        maxRadius: 45,
+                        backgroundImage:
+                            AssetImage('assets/images/the_ultimate_actor.jpg'),
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "Jennifer \n Aniston $i",
-                        style: Theme.of(context).textTheme.subtitle2.copyWith(
-                              color: Colors.orange[600],
-                            ),
-                      ),
-                    ],
-                  );
-                }
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "Jennifer \n Aniston $index",
+                      style: Theme.of(context).textTheme.subtitle2.copyWith(
+                            color: Colors.orange[600],
+                          ),
+                    ),
+                  ],
+                );
               },
               itemCount: 5,
               separatorBuilder: (BuildContext context, int index) {
@@ -137,19 +135,16 @@ class Trailers extends ViewModelWidget<MovieViewModel> {
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemBuilder: (BuildContext context, int index) {
-                for (var i = 0; i < 5; i++) {
-                  return Container(
-                    width: 250,
-                    color: Colors.white,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image:
-                                  AssetImage('assets/images/lion_king.jpg'))),
-                    ),
-                  );
-                }
+                return Container(
+                  width: 250,
+                  color: Colors.white,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/images/lion_king.jpg'))),
+                  ),
+                );
               },
               itemCount: 5,
               separatorBuilder: (BuildContext context, int index) {

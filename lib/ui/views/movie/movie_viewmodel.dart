@@ -2,7 +2,6 @@ import 'package:bltCinemas/app/locator.dart';
 import 'package:bltCinemas/model/movie_model.dart';
 import 'package:bltCinemas/services/api_service.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 
 class MovieViewModel extends BaseViewModel {
   ApiService _apiService = locator<ApiService>();

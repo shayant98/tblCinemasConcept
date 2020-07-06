@@ -1,6 +1,5 @@
 import 'package:bltCinemas/ui/views/ticket/ticket_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dash/flutter_dash.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:stacked/stacked.dart';

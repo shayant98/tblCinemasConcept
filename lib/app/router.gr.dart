@@ -13,6 +13,7 @@ import 'package:bltCinemas/ui/views/movie/movie_view.dart';
 import 'package:bltCinemas/ui/views/films/films_view.dart';
 import 'package:bltCinemas/ui/views/ticket/ticket_view.dart';
 import 'package:bltCinemas/ui/views/overview/overview_view.dart';
+import 'package:bltCinemas/ui/views/screen_times/screen_times_view.dart';
 
 abstract class Routes {
   static const startupViewRoute = '/startup-view-route';
@@ -21,6 +22,7 @@ abstract class Routes {
   static const filmsViewRoute = '/films-view-route';
   static const ticketViewRoute = '/ticket-view-route';
   static const overviewViewRoute = '/overview-view-route';
+  static const screenTimesViewRoute = '/screen-times-view-route';
   static const all = {
     startupViewRoute,
     homeViewRoute,
@@ -28,6 +30,7 @@ abstract class Routes {
     filmsViewRoute,
     ticketViewRoute,
     overviewViewRoute,
+    screenTimesViewRoute,
   };
 }
 
@@ -70,6 +73,11 @@ class Router extends RouterBase {
       case Routes.overviewViewRoute:
         return MaterialPageRoute<dynamic>(
           builder: (context) => OverviewView(),
+          settings: settings,
+        );
+      case Routes.screenTimesViewRoute:
+        return MaterialPageRoute<dynamic>(
+          builder: (context) => ScreenTimesView(),
           settings: settings,
         );
       default:

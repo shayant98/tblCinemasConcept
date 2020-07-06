@@ -1,4 +1,5 @@
 import 'package:bltCinemas/model/movie_model.dart';
+import 'package:bltCinemas/ui/dumb_widgets/time_slot.dart';
 import 'package:bltCinemas/ui/smart_widgets/movies_item/movie_item_view.dart';
 import 'package:bltCinemas/ui/views/overview/overview_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,27 @@ class OverviewView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             DayList(),
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: <Widget>[
+                  Icon(FontAwesomeIcons.infoCircle),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    model.showHalfOff ? "On Tuesdays 50% off" : '',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
             SizedBox(
               height: 20,
             ),
@@ -86,7 +108,7 @@ class DayList extends ViewModelWidget<OverviewViewModel> {
                       shadowColor: Colors.transparent,
                       child: Center(
                         child: Text(
-                          "Day $index",
+                          model.buildDates(index),
                           style: Theme.of(context).textTheme.bodyText2.copyWith(
                               fontWeight: index == model.selectedIndex
                                   ? FontWeight.bold
@@ -206,55 +228,6 @@ class MoviesList extends StatelessWidget {
       },
       itemCount: 7,
       separatorBuilder: (BuildContext context, int index) => Divider(),
-    );
-  }
-}
-
-class TimeSlot extends StatelessWidget {
-  final String startTime;
-  final String endTime;
-  final String type;
-
-  const TimeSlot({this.startTime, this.type, this.endTime});
-
-  @override
-  Widget build(BuildContext context) {
-    return Ink(
-      child: InkWell(
-        onTap: () {},
-        splashColor: Colors.orange[600],
-        borderRadius: BorderRadius.circular(10),
-        child: Container(
-          decoration: BoxDecoration(
-              color: Color(0xFF262626).withOpacity(0.7),
-              borderRadius: BorderRadius.circular(10)),
-          padding: EdgeInsets.all(8),
-          child: Column(
-            children: <Widget>[
-              RichText(
-                text: TextSpan(
-                  text: "$startTime - ",
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1
-                      .copyWith(fontWeight: FontWeight.bold),
-                  children: [
-                    TextSpan(
-                        text: endTime,
-                        style: Theme.of(context).textTheme.caption),
-                  ],
-                ),
-              ),
-              Container(
-                child: Text(
-                  type ?? '2D',
-                  style: Theme.of(context).textTheme.bodyText2,
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

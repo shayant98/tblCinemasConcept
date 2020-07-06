@@ -3,6 +3,7 @@ import 'package:bltCinemas/ui/views/films/films_view.dart';
 import 'package:bltCinemas/ui/views/home/home_view.dart';
 import 'package:bltCinemas/ui/views/movie/movie_view.dart';
 import 'package:bltCinemas/ui/views/overview/overview_view.dart';
+import 'package:bltCinemas/ui/views/screen_times/screen_times_view.dart';
 import 'package:bltCinemas/ui/views/startup/startup_view.dart';
 import 'package:bltCinemas/ui/views/ticket/ticket_view.dart';
 
@@ -15,4 +16,5 @@ class $Router {
   FilmsView filmsViewRoute;
   TicketView ticketViewRoute;
   OverviewView overviewViewRoute;
+  ScreenTimesView screenTimesViewRoute;
 }

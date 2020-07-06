@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bltCinemas/model/movie_model.dart';
 import 'package:bltCinemas/ui/dumb_widgets/movies_carousel.dart';
 import 'package:bltCinemas/ui/views/films/films_viewmodel.dart';

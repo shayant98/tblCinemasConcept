@@ -31,7 +31,6 @@ class AppbarSearch extends SearchDelegate<String> {
   }
 
   @override
-  // TODO: implement searchFieldLabel
   String get searchFieldLabel => "Search Movies";
 
   @override
