@@ -1,4 +1,5 @@
 import 'package:bltCinemas/model/movie_model.dart';
+import 'package:bltCinemas/ui/smart_widgets/category_button/category_button_view.dart';
 import 'package:bltCinemas/ui/dumb_widgets/movies_carousel.dart';
 import 'package:bltCinemas/ui/views/films/films_viewmodel.dart';
 import 'package:flutter/foundation.dart';
@@ -18,7 +19,7 @@ class FilmsView extends StatelessWidget {
           for (var i = 0; i < model.categories.length; i++)
             Column(
               children: <Widget>[
-                CategoryButtonWidget(
+                CategoryButtonView(
                   categoryName: model.categories[i],
                 ),
                 buildMoviesCarousel(model.categories[i], model.movies),
@@ -45,47 +46,5 @@ class FilmsView extends StatelessWidget {
         : MoviesCarousel(
             movies: categoryMovies,
           );
-  }
-}
-
-class CategoryButtonWidget extends StatelessWidget {
-  final String categoryName;
-
-  const CategoryButtonWidget({Key key, this.categoryName}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {},
-      splashColor: Colors.orange[600].withOpacity(0.2),
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              categoryName,
-              style: Theme.of(context).textTheme.headline6.copyWith(
-                    color: Colors.white,
-                  ),
-            ),
-            Row(
-              children: <Widget>[
-                Text(
-                  "View More",
-                  style: Theme.of(context).textTheme.subtitle2.copyWith(
-                        color: Colors.orange[600],
-                      ),
-                ),
-                Icon(
-                  FontAwesomeIcons.angleRight,
-                  color: Colors.orange[600],
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
   }
 }

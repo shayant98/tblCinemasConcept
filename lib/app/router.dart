@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route_annotations.dart';
+import 'package:bltCinemas/ui/views/category/category_view.dart';
 import 'package:bltCinemas/ui/views/films/films_view.dart';
 import 'package:bltCinemas/ui/views/home/home_view.dart';
 import 'package:bltCinemas/ui/views/movie/movie_view.dart';
@@ -17,4 +18,5 @@ class $Router {
   TicketView ticketViewRoute;
   OverviewView overviewViewRoute;
   ScreenTimesView screenTimesViewRoute;
+  CategoryView categoryViewRoute;
 }

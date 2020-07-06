@@ -1,5 +1,7 @@
+import 'package:bltCinemas/ui/smart_widgets/category_button/category_button_view.dart';
 import 'package:bltCinemas/ui/dumb_widgets/movies_carousel.dart';
 import 'package:bltCinemas/ui/views/dashboard/dashboard_viewmodel.dart';
+import 'package:bltCinemas/ui/views/films/films_view.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -30,33 +32,8 @@ class DashboardView extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  "Now showing",
-                  style: Theme.of(context).textTheme.headline6.copyWith(
-                        color: Colors.white,
-                      ),
-                ),
-                Row(
-                  children: <Widget>[
-                    Text(
-                      "View More",
-                      style: Theme.of(context).textTheme.subtitle2.copyWith(
-                            color: Colors.orange[600],
-                          ),
-                    ),
-                    Icon(
-                      FontAwesomeIcons.angleRight,
-                      color: Colors.orange[600],
-                    ),
-                  ],
-                )
-              ],
-            ),
+          CategoryButtonView(
+            categoryName: 'Now Showing',
           ),
           MoviesCarousel(movies: model.movies),
           Padding(
