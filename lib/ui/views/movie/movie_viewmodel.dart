@@ -8,17 +8,25 @@ class MovieViewModel extends BaseViewModel {
 
   Movie _currentMovie;
   Movie get currentMovie => _currentMovie;
+  bool _showFullDesc = false;
+  bool _showFullTitle = false;
+  bool get showFullDesc => _showFullDesc;
+  bool get showFullTitle => _showFullTitle;
 
   init() {
     _currentMovie = _apiService.getCurrentMovie();
-    print("${_apiService.getCurrentMovie()} TEST");
+    if (currentMovie.title.length < 140) {
+      _showFullTitle = true;
+    }
   }
-
-  bool _showFullDesc = false;
-  bool get showFullDesc => _showFullDesc;
 
   void toggleDesc() {
     _showFullDesc = !showFullDesc;
+    notifyListeners();
+  }
+
+  void toggleTitle() {
+    _showFullTitle = !_showFullTitle;
     notifyListeners();
   }
 }

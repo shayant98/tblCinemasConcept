@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bltCinemas/ui/smart_widgets/movies_item/movie_item_view.dart';
 import 'package:bltCinemas/ui/views/movie/movie_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -26,6 +27,10 @@ class MovieView extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
+            MovieInfo(),
+            SizedBox(
+              height: 20,
+            ),
             Description(),
             SizedBox(
               height: 20,
@@ -43,6 +48,78 @@ class MovieView extends StatelessWidget {
       ),
       viewModelBuilder: () => MovieViewModel(),
       onModelReady: (model) => model.init(),
+    );
+  }
+}
+
+class MovieInfo extends ViewModelWidget<MovieViewModel> {
+  const MovieInfo({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, MovieViewModel model) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            height: 200,
+            child: MovieItemWidget(movie: model.currentMovie),
+          ),
+          SizedBox(
+            width: 20,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              GestureDetector(
+                onTap: () {
+                  model.toggleTitle();
+                },
+                child: LimitedBox(
+                  maxWidth: MediaQuery.of(context).size.width * 0.5,
+                  child: Text(
+                    model.currentMovie.title,
+                    maxLines: model.showFullTitle ? null : 5,
+                    overflow: TextOverflow.fade,
+                    style: Theme.of(context).textTheme.bodyText2.copyWith(
+                          color: Colors.white,
+                        ),
+                  ),
+                ),
+              ),
+              Divider(),
+              Text(
+                "123 minutes",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText2
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
+              Divider(),
+              Row(
+                children: <Widget>[
+                  Icon(
+                    FontAwesomeIcons.accessibleIcon,
+                    size: 12,
+                  ),
+                  Icon(
+                    FontAwesomeIcons.accessibleIcon,
+                    size: 12,
+                  ),
+                  Icon(
+                    FontAwesomeIcons.accessibleIcon,
+                    size: 12,
+                  ),
+                ],
+              ),
+              Divider(),
+            ],
+          )
+        ],
+      ),
     );
   }
 }
@@ -196,28 +273,33 @@ class Description extends ViewModelWidget<MovieViewModel> {
           SizedBox(
             height: 20,
           ),
-          AnimatedCrossFade(
-            firstChild: Text(
-              model.currentMovie.desc,
-              maxLines: 6,
-              overflow: TextOverflow.fade,
-              style: Theme.of(context).textTheme.bodyText2.copyWith(
-                    color: Colors.white,
-                  ),
+          GestureDetector(
+            onTap: () {
+              model.toggleDesc();
+            },
+            child: AnimatedCrossFade(
+              firstChild: Text(
+                model.currentMovie.desc,
+                maxLines: 6,
+                overflow: TextOverflow.fade,
+                style: Theme.of(context).textTheme.bodyText2.copyWith(
+                      color: Colors.white,
+                    ),
+              ),
+              secondChild: Text(
+                model.currentMovie.desc,
+                overflow: TextOverflow.fade,
+                style: Theme.of(context).textTheme.bodyText2.copyWith(
+                      color: Colors.white,
+                    ),
+              ),
+              firstCurve: Curves.easeIn,
+              secondCurve: Curves.easeOutExpo,
+              crossFadeState: (model.showFullDesc)
+                  ? CrossFadeState.showSecond
+                  : CrossFadeState.showFirst,
+              duration: Duration(milliseconds: 200),
             ),
-            secondChild: Text(
-              model.currentMovie.desc,
-              overflow: TextOverflow.fade,
-              style: Theme.of(context).textTheme.bodyText2.copyWith(
-                    color: Colors.white,
-                  ),
-            ),
-            firstCurve: Curves.easeIn,
-            secondCurve: Curves.easeOutExpo,
-            crossFadeState: (model.showFullDesc)
-                ? CrossFadeState.showSecond
-                : CrossFadeState.showFirst,
-            duration: Duration(milliseconds: 200),
           )
         ],
       ),
@@ -297,6 +379,8 @@ class MovieTitle extends ViewModelWidget<MovieViewModel> {
         ),
         child: Text(
           model.currentMovie.title,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.headline3.copyWith(
                 color: Colors.white,
               ),
