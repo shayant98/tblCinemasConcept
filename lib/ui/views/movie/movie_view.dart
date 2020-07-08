@@ -17,7 +17,9 @@ class MovieView extends StatelessWidget {
             FontAwesomeIcons.shoppingBag,
             color: Colors.white,
           ),
-          onPressed: () {},
+          onPressed: () {
+            model.navigateToTicketsView();
+          },
         ),
         body: ListView(
           children: <Widget>[

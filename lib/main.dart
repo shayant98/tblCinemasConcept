@@ -2,6 +2,7 @@ import 'package:bltCinemas/app/locator.dart';
 import 'package:bltCinemas/app/router.gr.dart';
 import 'package:bltCinemas/app/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 void main() {
@@ -11,8 +12,12 @@ void main() {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor: Color(0xFF121212), // navigation bar color
+    ));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',

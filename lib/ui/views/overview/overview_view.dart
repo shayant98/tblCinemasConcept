@@ -209,9 +209,9 @@ class MoviesList extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (BuildContext context, int index) =>
                             TimeSlot(
-                          startTime: '23:00',
-                          endTime: '01:15',
-                        ),
+                                startTime: DateTime.now(),
+                                endTime:
+                                    DateTime.now().add(Duration(hours: 2))),
                         itemCount: 3,
                         separatorBuilder: (BuildContext context, int index) =>
                             SizedBox(
