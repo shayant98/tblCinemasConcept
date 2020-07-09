@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route_annotations.dart';
 import 'package:bltCinemas/ui/views/category/category_view.dart';
 import 'package:bltCinemas/ui/views/films/films_view.dart';
 import 'package:bltCinemas/ui/views/home/home_view.dart';
+import 'package:bltCinemas/ui/views/login/login_view.dart';
 import 'package:bltCinemas/ui/views/movie/movie_view.dart';
 import 'package:bltCinemas/ui/views/overview/overview_view.dart';
 import 'package:bltCinemas/ui/views/screen_times/screen_times_view.dart';
@@ -19,4 +20,5 @@ class $Router {
   OverviewView overviewViewRoute;
   ScreenTimesView screenTimesViewRoute;
   CategoryView categoryViewRoute;
+  LoginView loginViewRoute;
 }

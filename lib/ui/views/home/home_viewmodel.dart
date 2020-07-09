@@ -3,6 +3,7 @@ import 'package:bltCinemas/app/router.gr.dart';
 import 'package:bltCinemas/model/bottom_menu_items_model.dart';
 import 'package:bltCinemas/ui/views/dashboard/dashboard_view.dart';
 import 'package:bltCinemas/ui/views/films/films_view.dart';
+import 'package:bltCinemas/ui/views/login/login_view.dart';
 import 'package:bltCinemas/ui/views/ticket/ticket_view.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -30,7 +31,7 @@ class HomeViewModel extends BaseViewModel {
     BottomMenuItemModel(
       icon: Icon(FontAwesomeIcons.user),
       title: 'Profile',
-      view: DashboardView(),
+      view: LoginView(),
     ),
   ];
 
