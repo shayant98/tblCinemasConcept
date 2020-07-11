@@ -11,11 +11,6 @@ class DashboardViewModel extends StreamViewModel {
   List<Movie> get movies => _movies;
 
   @override
-  Stream<List<Movie>> get stream => _firestoreService.listenToMoviesStream();
-
-  @override
-  void onData(data) {
-    print(data.length);
-    super.onData(data);
-  }
+  Stream<List<Movie>> get stream =>
+      _firestoreService.listenToMoviesByCategoryStream('now showing');
 }

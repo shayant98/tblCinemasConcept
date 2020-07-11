@@ -17,46 +17,51 @@ class CategoryView extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            (model.movies.length > 0)
-                ? Expanded(
-                    child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2),
-                      itemBuilder: (_, index) => Container(
-                          child: Column(
-                        children: <Widget>[
-                          Container(
-                            height: 150,
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            model.movies[index].title,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1
-                                .copyWith(fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            model.movies[index].comingSoonDate ?? '',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText2
-                                .copyWith(color: Colors.orange[600]),
-                          ),
-                        ],
-                      )),
-                      itemCount: model.movies.length,
+            if (model.dataReady)
+              (model.data.length > 0)
+                  ? Expanded(
+                      child: GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2),
+                        itemBuilder: (_, index) => Container(
+                            child: Column(
+                          children: <Widget>[
+                            Container(
+                              height: 150,
+                              child: MovieItemWidget(
+                                movie: model.data[index],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              model.data[index].title,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              model.data[index].comingSoonDate ?? '',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2
+                                  .copyWith(color: Colors.orange[600]),
+                            ),
+                          ],
+                        )),
+                        itemCount: model.data.length,
+                      ),
+                    )
+                  : Center(
+                      child: Text('No movies found'),
                     ),
-                  )
-                : Center(
-                    child: Text('No movies found'),
-                  ),
           ],
         ),
       ),
       viewModelBuilder: () => CategoryViewModel(),
+      onModelReady: (model) => model.init(),
     );
   }
 }
