@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "402829648481",
+    "firebase_url": "https://tblconcept-7af93.firebaseio.com",
+    "project_id": "tblconcept-7af93",
+    "storage_bucket": "tblconcept-7af93.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:402829648481:android:0901edaf9f11817ee9c020",
+        "android_client_info": {
+          "package_name": "com.tbl.bltCinemas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "402829648481-s1o5g085l2i6ckpp0ecd84101olhkune.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDVnS1sbEpc0NRPl5GZp9BEAj5rS1DRrc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "402829648481-s1o5g085l2i6ckpp0ecd84101olhkune.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

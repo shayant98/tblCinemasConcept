@@ -19,7 +19,9 @@ class MovieItemWidget extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.33,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                image: DecorationImage(image: AssetImage(movie.poster))),
+                image: DecorationImage(
+                    image: NetworkImage(movie.poster ??
+                        'https://www.joblo.com/assets/images/oldsite/posters/images/full/avengers-banneruk-2.jpg'))),
           )),
       viewModelBuilder: () => MovieItemViewModel(),
     );

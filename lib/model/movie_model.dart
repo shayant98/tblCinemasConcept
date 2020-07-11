@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Movie {
   final String id;
   final String title;
@@ -18,4 +20,11 @@ class Movie {
     this.comingSoon,
     this.comingSoonDate,
   });
+
+  factory Movie.fromMap(DocumentSnapshot documentSnapshot) => Movie(
+        id: documentSnapshot.documentID,
+        title: documentSnapshot.data['title'],
+        poster: documentSnapshot.data['poster'],
+        desc: documentSnapshot.data['description'],
+      );
 }

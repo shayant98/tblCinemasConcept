@@ -35,7 +35,9 @@ class DashboardView extends StatelessWidget {
           CategoryButtonView(
             categoryName: 'Now Showing',
           ),
-          MoviesCarousel(movies: model.movies),
+          (model.dataReady)
+              ? MoviesCarousel(movies: model.data)
+              : Text("Loading"),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
@@ -53,7 +55,6 @@ class DashboardView extends StatelessWidget {
         ],
       ),
       viewModelBuilder: () => DashboardViewModel(),
-      onModelReady: (model) => model.init(),
     );
   }
 }

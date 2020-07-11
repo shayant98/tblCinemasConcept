@@ -343,7 +343,8 @@ class MovieImage extends ViewModelWidget<MovieViewModel> {
         height: MediaQuery.of(context).size.height * 0.5,
         decoration: BoxDecoration(
           image: DecorationImage(
-              fit: BoxFit.cover, image: AssetImage(model.currentMovie.poster)),
+              fit: BoxFit.cover,
+              image: NetworkImage(model.currentMovie.poster)),
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(100),
           ),
