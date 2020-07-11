@@ -27,9 +27,6 @@ class CategoryView extends StatelessWidget {
                         children: <Widget>[
                           Container(
                             height: 150,
-                            child: MovieItemWidget(
-                              movie: model.movies[index],
-                            ),
                           ),
                           SizedBox(
                             height: 5,
@@ -60,7 +57,6 @@ class CategoryView extends StatelessWidget {
         ),
       ),
       viewModelBuilder: () => CategoryViewModel(),
-      onModelReady: (model) => model.init(),
     );
   }
 }

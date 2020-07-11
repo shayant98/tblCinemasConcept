@@ -22,7 +22,7 @@ class FilmsView extends StatelessWidget {
                 CategoryButtonView(
                   categoryName: model.categories[i],
                 ),
-                buildMoviesCarousel(model.categories[i], model.movies),
+                buildMoviesCarousel(model.categories[i], model.data),
               ],
             ),
         ],

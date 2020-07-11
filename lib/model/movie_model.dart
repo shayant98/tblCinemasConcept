@@ -22,9 +22,9 @@ class Movie {
   });
 
   factory Movie.fromMap(DocumentSnapshot documentSnapshot) => Movie(
-        id: documentSnapshot.documentID,
-        title: documentSnapshot.data['title'],
-        poster: documentSnapshot.data['poster'],
-        desc: documentSnapshot.data['description'],
-      );
+      id: documentSnapshot.documentID,
+      title: documentSnapshot.data['title'],
+      poster: documentSnapshot.data['poster'],
+      desc: documentSnapshot.data['description'],
+      categories: documentSnapshot.data['categories'].cast<String>());
 }
