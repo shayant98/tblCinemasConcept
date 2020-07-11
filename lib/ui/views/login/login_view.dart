@@ -71,7 +71,10 @@ class LoginView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 CircularButton(
-                  icon: Icon(FontAwesomeIcons.google),
+                  icon: Icon(
+                    FontAwesomeIcons.google,
+                  ),
+                  onPressed: model.googleLogIn,
                 ),
                 SizedBox(
                   width: 20,
@@ -85,6 +88,7 @@ class LoginView extends StatelessWidget {
         ),
       ),
       viewModelBuilder: () => LoginViewModel(),
+      onModelReady: (model) => model.init(),
     );
   }
 }

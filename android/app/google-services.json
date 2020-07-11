@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "402829648481-8m7ds1tn533ced0jp1lom7qvfv2i7oqn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tbl.bltCinemas",
+            "certificate_hash": "4964e342463233290ca2e8c26cc7c896f28eeced"
+          }
+        },
+        {
           "client_id": "402829648481-s1o5g085l2i6ckpp0ecd84101olhkune.apps.googleusercontent.com",
           "client_type": 3
         }
