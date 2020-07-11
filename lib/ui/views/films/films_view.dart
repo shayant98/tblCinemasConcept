@@ -16,15 +16,21 @@ class FilmsView extends StatelessWidget {
           SizedBox(
             height: 5,
           ),
-          for (var i = 0; i < model.categories.length; i++)
-            Column(
-              children: <Widget>[
-                CategoryButtonView(
-                  categoryName: model.categories[i],
-                ),
-                buildMoviesCarousel(model.categories[i], model.data),
-              ],
-            ),
+          model.dataReady
+              ? Column(
+                  children: <Widget>[
+                    for (var i = 0; i < model.categories.length; i++)
+                      Column(
+                        children: <Widget>[
+                          CategoryButtonView(
+                            categoryName: model.categories[i],
+                          ),
+                          buildMoviesCarousel(model.categories[i], model.data),
+                        ],
+                      ),
+                  ],
+                )
+              : CircularProgressIndicator(),
         ],
       ),
       viewModelBuilder: () => FilmsViewModel(),
@@ -36,8 +42,21 @@ class FilmsView extends StatelessWidget {
     List<Movie> categoryMovies = [];
 
     for (Movie movie in movies) {
-      if (movie.categories.contains(category.toLowerCase())) {
-        categoryMovies..add(movie);
+      if (category == 'Coming Soon' || category == 'Now Showing') {
+        if (category == 'Coming Soon') {
+          if (movie.comingSoon) {
+            categoryMovies..add(movie);
+          }
+        }
+        if (category == 'Now Showing') {
+          if (movie.nowShowing) {
+            categoryMovies..add(movie);
+          }
+        }
+      } else {
+        if (movie.categories.contains(category.toLowerCase())) {
+          categoryMovies..add(movie);
+        }
       }
     }
 
