@@ -25,6 +25,8 @@ void $initGetIt(GetIt g, {String environment}) {
       () => thirdPartyServicesModule.firestoreService);
   g.registerLazySingleton<NavigationService>(
       () => thirdPartyServicesModule.navigationService);
+  g.registerLazySingleton<SnackbarService>(
+      () => thirdPartyServicesModule.snackbarService);
 
   //Eager singletons must be registered in the right order
   g.registerSingleton<DashboardViewModel>(DashboardViewModel());
@@ -42,4 +44,6 @@ class _$ThirdPartyServicesModule extends ThirdPartyServicesModule {
   FirestoreService get firestoreService => FirestoreService();
   @override
   NavigationService get navigationService => NavigationService();
+  @override
+  SnackbarService get snackbarService => SnackbarService();
 }
