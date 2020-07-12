@@ -48,10 +48,6 @@ class HomeViewModel extends IndexTrackingViewModel {
   }
 
   void navigateToLoginOrProfile() async {
-    // if (data == null) {
     await _navigationService.navigateTo(Routes.loginViewRoute);
-    // } else {
-    // awa/it _navigationService.navigateTo(Routes.profileViewRoute);
-    // }
   }
 }

@@ -8,11 +8,20 @@ import 'package:stacked_services/stacked_services.dart';
 
 class LoginViewModel extends BaseViewModel {
   NavigationService _navigationService = locator<NavigationService>();
+  SnackbarService _snackbarService = locator<SnackbarService>();
   AuthService _authService = locator<AuthService>();
 
   googleLogIn() async {
-    await _authService.loginWithGoogle();
-    navigateToProfile();
+    var result = await _authService.loginWithGoogle();
+    if (result is bool) {
+      if (result) {
+        navigateToProfile();
+      } else {
+        showSnackbar('Login Failure', 'Google login failed, please try again');
+      }
+    } else {
+      showSnackbar('Login Failure', 'Google login failed, please try again');
+    }
   }
 
   navigateToProfile() async {
@@ -21,5 +30,13 @@ class LoginViewModel extends BaseViewModel {
 
   init() async {
     if (await _authService.isUserLoggedIn()) navigateToProfile();
+  }
+
+  showSnackbar(String title, String body) {
+    _snackbarService.showCustomSnackBar(
+        message: body,
+        title: title,
+        isDismissible: true,
+        duration: Duration(seconds: 2));
   }
 }

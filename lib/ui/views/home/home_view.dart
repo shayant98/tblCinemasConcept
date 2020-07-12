@@ -31,7 +31,7 @@ class HomeView extends StatelessWidget {
             IconButton(
               icon: Icon(FontAwesomeIcons.solidUserCircle),
               onPressed: () {
-                // model.navigateToLoginOrProfile();
+                model.navigateToLoginOrProfile();
               },
               iconSize: 24,
             ),

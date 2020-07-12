@@ -1,3 +1,4 @@
+import 'package:bltCinemas/ui/dumb_widgets/action_button.dart';
 import 'package:bltCinemas/ui/views/login/login_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,6 +12,7 @@ class LoginView extends StatelessWidget {
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           elevation: 0,
+          title: Text("LOGIN"),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -28,45 +30,15 @@ class LoginView extends StatelessWidget {
               SizedBox(
                 height: 50,
               ),
-              Ink(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(40),
-                    color: Color(0xFF262626)),
-                child: InkWell(
-                  onTap: () {
-                    model.navigateToProfile();
-                  },
-                  splashColor: Colors.orange,
-                  borderRadius: BorderRadius.circular(40),
-                  child: Container(
-                    padding: EdgeInsets.all(8),
-                    width: MediaQuery.of(context).size.width,
-                    height: 50,
-                    child: Row(
-                      children: <Widget>[
-                        Icon(
-                          FontAwesomeIcons.facebook,
-                          color: Colors.orange[600],
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          "Log in with Facebook",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1
-                              .copyWith(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+              ActionButton(
+                title: "Login with email",
+                icon: Icon(FontAwesomeIcons.caretRight,
+                    color: Colors.orange[600]),
               ),
               SizedBox(
                 height: 20,
               ),
-              Text("Or sign in with"),
+              Center(child: Text("Or sign in with")),
               SizedBox(
                 height: 20,
               ),
@@ -83,9 +55,22 @@ class LoginView extends StatelessWidget {
                     width: 20,
                   ),
                   CircularButton(
-                    icon: Icon(FontAwesomeIcons.envelope),
+                    icon: Icon(FontAwesomeIcons.facebookF),
                   ),
                 ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Center(
+                  child: FlatButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Or create an account",
+                        style: Theme.of(context).textTheme.caption,
+                      ))),
+              SizedBox(
+                height: 20,
               ),
             ],
           ),
