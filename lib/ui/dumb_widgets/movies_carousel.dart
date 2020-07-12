@@ -12,6 +12,7 @@ class MoviesCarousel extends StatelessWidget {
       child: Container(
         height: MediaQuery.of(context).size.height * 0.30,
         child: ListView.separated(
+          key: PageStorageKey('movie-carousel'),
           scrollDirection: Axis.horizontal,
           itemBuilder: (BuildContext context, int index) {
             return MovieItemWidget(

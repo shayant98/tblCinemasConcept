@@ -13,6 +13,7 @@ class FilmsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<FilmsViewModel>.reactive(
       builder: (context, model, child) => ListView(
+        key: PageStorageKey('movie-carousel'),
         children: <Widget>[
           SizedBox(
             height: 5,
