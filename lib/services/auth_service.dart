@@ -13,6 +13,10 @@ class AuthService {
     return user != null;
   }
 
+  Stream<FirebaseUser> userAuthState() {
+    return _firebaseAuth.onAuthStateChanged;
+  }
+
   Future loginWithGoogle() async {
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     final GoogleSignInAuthentication googleSignInAuthentication =
@@ -36,5 +40,6 @@ class AuthService {
 
   logout() {
     _firebaseAuth.signOut();
+    _googleSignIn.disconnect();
   }
 }

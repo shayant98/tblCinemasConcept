@@ -8,83 +8,87 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<LoginViewModel>.reactive(
-      builder: (context, model, child) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: ListView(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image(image: AssetImage('assets/images/movie_image.png')),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              "Login to buy tickets, save movies for later",
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyText1,
-            ),
-            SizedBox(
-              height: 50,
-            ),
-            Ink(
-              decoration: BoxDecoration(
+      builder: (context, model, child) => Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: ListView(
+            children: <Widget>[
+              Image(image: AssetImage('assets/images/movie_image.png')),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Login to buy tickets, save movies for later",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              Ink(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40),
+                    color: Color(0xFF262626)),
+                child: InkWell(
+                  onTap: () {
+                    model.navigateToProfile();
+                  },
+                  splashColor: Colors.orange,
                   borderRadius: BorderRadius.circular(40),
-                  color: Color(0xFF262626)),
-              child: InkWell(
-                onTap: () {
-                  model.navigateToProfile();
-                },
-                splashColor: Colors.orange,
-                borderRadius: BorderRadius.circular(40),
-                child: Container(
-                  padding: EdgeInsets.all(8),
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  child: Row(
-                    children: <Widget>[
-                      Icon(
-                        FontAwesomeIcons.facebook,
-                        color: Colors.orange[600],
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        "Log in with Facebook",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText1
-                            .copyWith(fontWeight: FontWeight.bold),
-                      ),
-                    ],
+                  child: Container(
+                    padding: EdgeInsets.all(8),
+                    width: MediaQuery.of(context).size.width,
+                    height: 50,
+                    child: Row(
+                      children: <Widget>[
+                        Icon(
+                          FontAwesomeIcons.facebook,
+                          color: Colors.orange[600],
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          "Log in with Facebook",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1
+                              .copyWith(fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text("Or sign in with"),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                CircularButton(
-                  icon: Icon(
-                    FontAwesomeIcons.google,
+              SizedBox(
+                height: 20,
+              ),
+              Text("Or sign in with"),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  CircularButton(
+                    icon: Icon(
+                      FontAwesomeIcons.google,
+                    ),
+                    onPressed: model.googleLogIn,
                   ),
-                  onPressed: model.googleLogIn,
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                CircularButton(
-                  icon: Icon(FontAwesomeIcons.envelope),
-                ),
-              ],
-            ),
-          ],
+                  SizedBox(
+                    width: 20,
+                  ),
+                  CircularButton(
+                    icon: Icon(FontAwesomeIcons.envelope),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       viewModelBuilder: () => LoginViewModel(),

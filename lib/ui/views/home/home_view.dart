@@ -27,7 +27,14 @@ class HomeView extends StatelessWidget {
                 showSearch(context: context, delegate: AppbarSearch());
               },
               iconSize: 18,
-            )
+            ),
+            IconButton(
+              icon: Icon(FontAwesomeIcons.solidUserCircle),
+              onPressed: () {
+                model.navigateToLoginOrProfile();
+              },
+              iconSize: 24,
+            ),
           ],
         ),
         body: model.menuItems[model.selectedIndex].view,
