@@ -1,3 +1,4 @@
+import 'package:bltCinemas/app/locator.dart';
 import 'package:bltCinemas/model/movie_model.dart';
 import 'package:bltCinemas/ui/smart_widgets/category_button/category_button_view.dart';
 import 'package:bltCinemas/ui/dumb_widgets/movies_carousel.dart';
@@ -33,8 +34,10 @@ class FilmsView extends StatelessWidget {
               : CircularProgressIndicator(),
         ],
       ),
-      viewModelBuilder: () => FilmsViewModel(),
+      viewModelBuilder: () => locator<FilmsViewModel>(),
       onModelReady: (model) => model.init(),
+      initialiseSpecialViewModelsOnce: true,
+      disposeViewModel: false,
     );
   }
 

@@ -1,3 +1,4 @@
+import 'package:bltCinemas/app/locator.dart';
 import 'package:bltCinemas/ui/smart_widgets/category_button/category_button_view.dart';
 import 'package:bltCinemas/ui/dumb_widgets/movies_carousel.dart';
 import 'package:bltCinemas/ui/views/dashboard/dashboard_viewmodel.dart';
@@ -54,7 +55,9 @@ class DashboardView extends StatelessWidget {
           ),
         ],
       ),
-      viewModelBuilder: () => DashboardViewModel(),
+      viewModelBuilder: () => locator<DashboardViewModel>(),
+      disposeViewModel: false,
+      initialiseSpecialViewModelsOnce: true,
     );
   }
 }

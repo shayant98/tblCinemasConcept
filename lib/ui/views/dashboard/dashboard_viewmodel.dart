@@ -1,9 +1,10 @@
 import 'package:bltCinemas/app/locator.dart';
 import 'package:bltCinemas/model/movie_model.dart';
-import 'package:bltCinemas/services/api_service.dart';
 import 'package:bltCinemas/services/firestore_service.dart';
+import 'package:injectable/injectable.dart';
 import 'package:stacked/stacked.dart';
 
+@singleton
 class DashboardViewModel extends StreamViewModel {
   FirestoreService _firestoreService = locator<FirestoreService>();
 

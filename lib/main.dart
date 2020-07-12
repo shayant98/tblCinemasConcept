@@ -6,7 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
+
   runApp(MyApp());
 }
 

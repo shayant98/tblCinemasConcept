@@ -15,7 +15,7 @@ class HomeView extends StatelessWidget {
               padding: const EdgeInsets.only(left: 8.0),
               child: Image(image: AssetImage("assets/images/tbl.png"))),
           title: Text(
-            model.menuItems[model.selectedIndex].title.toUpperCase(),
+            model.menuItems[model.currentIndex].title.toUpperCase(),
             style: TextStyle(
               fontWeight: FontWeight.bold,
             ),
@@ -31,13 +31,13 @@ class HomeView extends StatelessWidget {
             IconButton(
               icon: Icon(FontAwesomeIcons.solidUserCircle),
               onPressed: () {
-                model.navigateToLoginOrProfile();
+                // model.navigateToLoginOrProfile();
               },
               iconSize: 24,
             ),
           ],
         ),
-        body: model.menuItems[model.selectedIndex].view,
+        body: model.menuItems[model.currentIndex].view,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
@@ -64,8 +64,8 @@ class BottomNavigation extends ViewModelWidget<HomeViewModel> {
   Widget build(BuildContext context, HomeViewModel model) {
     return BottomAppBar(
       child: BottomNavigationBar(
-        currentIndex: model.selectedIndex,
-        onTap: (index) => model.selectMenuItem(index),
+        currentIndex: model.currentIndex,
+        onTap: (index) => model.setIndex(index),
         items: [
           for (BottomMenuItemModel item in model.menuItems)
             BottomNavigationBarItem(icon: item.icon, title: Text(item.title))

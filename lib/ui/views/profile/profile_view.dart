@@ -1,3 +1,4 @@
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:bltCinemas/ui/views/profile/profle_viewmodel.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -116,6 +117,13 @@ class CreditOptions extends StatelessWidget {
             size: 18,
           ),
           title: Text("Scan QR code"),
+          onTap: () async {
+            var result = await BarcodeScanner.scan();
+            print(result.type); // The result type (barcode, cancelled, failed)
+            print(result.rawContent); // The barcode content
+            print(result.format); // The barcode format (as enum)
+            print(result.formatNote);
+          },
         ),
         ListTile(
           leading: Icon(
