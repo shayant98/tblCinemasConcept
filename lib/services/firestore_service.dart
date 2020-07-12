@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bltCinemas/model/movie_model.dart';
+import 'package:bltCinemas/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -13,6 +14,9 @@ class FirestoreService {
       StreamController<List<Movie>>.broadcast();
   final StreamController<List<Movie>> _moviesByCategoryController =
       StreamController<List<Movie>>.broadcast();
+  final StreamController<User> _userController =
+      StreamController<User>.broadcast();
+
   Stream listenToMoviesStream() {
     _moviesCollectionReference.snapshots().listen((moviesSnapshot) {
       if (moviesSnapshot.documents.isNotEmpty) {
@@ -60,15 +64,34 @@ class FirestoreService {
     return _moviesByCategoryController.stream;
   }
 
-  updateUser(FirebaseUser user) {
-    DocumentReference userRef = _usersCollectionReference.document(user.uid);
-    print(userRef);
-    return userRef.setData({
-      'uid': user.uid,
-      'email': user.email,
-      'photoUrl': user.photoUrl,
-      'displayName': user.displayName,
-      'lastSeen': DateTime.now()
-    }, merge: true);
+  updateUser(User user) {
+    if (user != null) {
+      DocumentReference userRef = _usersCollectionReference.document(user.id);
+      return userRef.setData({
+        'uid': user.id,
+        'email': user.email,
+        'photoUrl': user.photoUrl,
+        'displayName': user.displayName,
+        'lastSeen': DateTime.now(),
+      }, merge: true);
+    }
+  }
+
+  addCreditsToUser(String uid, double creditAmmount) async {
+    if (uid != null) {
+      DocumentReference userRef = _usersCollectionReference.document(uid);
+      DocumentSnapshot userSnapshot = await userRef.get();
+      return userRef.updateData(
+        {'credits': (userSnapshot.data['credits'] ?? 0.00) + creditAmmount},
+      );
+    }
+  }
+
+  Stream<User> listenToUserStream(String uid) {
+    _usersCollectionReference.document(uid).snapshots().listen((snapshot) {
+      User userData = User.fromMap(snapshot);
+      _userController.add(userData);
+    });
+    return _userController.stream;
   }
 }
