@@ -16,8 +16,6 @@ class HomeViewModel extends IndexTrackingViewModel {
   NavigationService _navigationService = locator<NavigationService>();
   AuthService _authService = locator<AuthService>();
 
-  var profilePage = LoginView();
-
   List<BottomMenuItemModel> _menuItems = [
     BottomMenuItemModel(
       icon: Icon(FontAwesomeIcons.home),
@@ -48,6 +46,10 @@ class HomeViewModel extends IndexTrackingViewModel {
   }
 
   void navigateToLoginOrProfile() async {
-    await _navigationService.navigateTo(Routes.loginViewRoute);
+    if (_authService.currentUser == null) {
+      await _navigationService.navigateTo(Routes.loginViewRoute);
+    } else {
+      await _navigationService.navigateTo(Routes.profileViewRoute);
+    }
   }
 }

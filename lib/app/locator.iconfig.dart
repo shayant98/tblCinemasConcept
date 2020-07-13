@@ -11,6 +11,7 @@ import 'package:bltCinemas/ui/views/dashboard/dashboard_viewmodel.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:bltCinemas/ui/views/films/films_viewmodel.dart';
 import 'package:bltCinemas/services/firestore_service.dart';
+import 'package:bltCinemas/services/qrcode_service.dart';
 import 'package:get_it/get_it.dart';
 
 void $initGetIt(GetIt g, {String environment}) {
@@ -25,6 +26,8 @@ void $initGetIt(GetIt g, {String environment}) {
       () => thirdPartyServicesModule.firestoreService);
   g.registerLazySingleton<NavigationService>(
       () => thirdPartyServicesModule.navigationService);
+  g.registerLazySingleton<QRcodeService>(
+      () => thirdPartyServicesModule.qRcodeService);
   g.registerLazySingleton<SnackbarService>(
       () => thirdPartyServicesModule.snackbarService);
 
@@ -44,6 +47,8 @@ class _$ThirdPartyServicesModule extends ThirdPartyServicesModule {
   FirestoreService get firestoreService => FirestoreService();
   @override
   NavigationService get navigationService => NavigationService();
+  @override
+  QRcodeService get qRcodeService => QRcodeService();
   @override
   SnackbarService get snackbarService => SnackbarService();
 }

@@ -32,8 +32,7 @@ class LoginView extends StatelessWidget {
               ),
               ActionButton(
                 title: "Login with email",
-                icon: Icon(FontAwesomeIcons.caretRight,
-                    color: Colors.orange[600]),
+                icon: FontAwesomeIcons.envelope,
               ),
               SizedBox(
                 height: 20,

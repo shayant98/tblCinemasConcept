@@ -1,6 +1,7 @@
 import 'package:bltCinemas/services/api_service.dart';
 import 'package:bltCinemas/services/auth_service.dart';
 import 'package:bltCinemas/services/firestore_service.dart';
+import 'package:bltCinemas/services/qrcode_service.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -18,4 +19,6 @@ abstract class ThirdPartyServicesModule {
   FirestoreService get firestoreService;
   @lazySingleton
   AuthService get authService;
+  @lazySingleton
+  QRcodeService get qRcodeService;
 }

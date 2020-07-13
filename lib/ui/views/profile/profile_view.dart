@@ -43,13 +43,8 @@ class ProfileView extends StatelessWidget {
                     SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      model.data.email,
-                      style: Theme.of(context)
-                          .textTheme
-                          .caption
-                          .copyWith(fontWeight: FontWeight.bold),
-                    ),
+                    Text(model.data.email,
+                        style: Theme.of(context).textTheme.caption),
                     SizedBox(
                       height: 10,
                     ),
@@ -65,11 +60,32 @@ class ProfileView extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 50),
                       onPressed: () {
                         showModalBottomSheet(
-                            isScrollControlled: true,
-                            context: context,
-                            builder: (_) => CreditOptions(
-                                  option2: model.add50Credis,
-                                ));
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (_) => Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              ListTile(
+                                leading: Icon(
+                                  FontAwesomeIcons.qrcode,
+                                  size: 18,
+                                ),
+                                title: Text("Scan QR code"),
+                                onTap: () {},
+                              ),
+                              ListTile(
+                                leading: Icon(
+                                  FontAwesomeIcons.pen,
+                                  size: 18,
+                                ),
+                                title: Text("Write code"),
+                                onTap: () {
+                                  model.addCredit(50);
+                                },
+                              )
+                            ],
+                          ),
+                        );
                       },
                       color: Colors.orange[600],
                       child: Text(
@@ -82,32 +98,37 @@ class ProfileView extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Text(
-                      "\$${model.data.credits ?? '0.00'}",
+                      "Credits: \$${model.data.credits ?? '0.00'}",
                       style: Theme.of(context)
                           .textTheme
                           .caption
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
-                      height: 10,
-                    ),
-                    SizedBox(
                       height: 50,
                     ),
                     ActionButton(
                       title: "Edit profile",
-                      icon: Icon(FontAwesomeIcons.caretRight,
-                          color: Colors.orange[600]),
+                      icon: FontAwesomeIcons.userEdit,
                     ),
                     SizedBox(
                       height: 20,
                     ),
                     ActionButton(
-                      title: "Logout",
+                        title: "Logout",
+                        onpressed: model.logout,
+                        icon: FontAwesomeIcons.signOutAlt),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    ActionButton(
+                      title: "Settings",
                       onpressed: model.logout,
-                      icon: Icon(FontAwesomeIcons.caretRight,
-                          color: Colors.orange[600]),
+                      icon: FontAwesomeIcons.cog,
                     ),
                   ],
                 )
@@ -115,45 +136,6 @@ class ProfileView extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 )),
       viewModelBuilder: () => ProfileViewModel(),
-    );
-  }
-}
-
-class CreditOptions extends StatelessWidget {
-  final Function option2;
-
-  const CreditOptions({this.option2});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        ListTile(
-          leading: Icon(
-            FontAwesomeIcons.qrcode,
-            size: 18,
-          ),
-          title: Text("Scan QR code"),
-          onTap: () async {
-            var result = await BarcodeScanner.scan();
-            print(result.type); // The result type (barcode, cancelled, failed)
-            print(result.rawContent); // The barcode content
-            print(result.format); // The barcode format (as enum)
-            print(result.formatNote);
-          },
-        ),
-        ListTile(
-          leading: Icon(
-            FontAwesomeIcons.pen,
-            size: 18,
-          ),
-          title: Text("Write code"),
-          onTap: () {
-            option2();
-          },
-        )
-      ],
     );
   }
 }

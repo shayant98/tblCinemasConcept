@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ActionButton extends StatelessWidget {
   final Function onpressed;
   final String title;
-  final Icon icon;
+  final IconData icon;
 
   const ActionButton({this.onpressed, this.title, this.icon});
 
@@ -26,14 +27,27 @@ class ActionButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(
-                title,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1
-                    .copyWith(fontWeight: FontWeight.bold),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Icon(
+                    icon,
+                    color: Colors.orange[600],
+                    size: 18,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    title,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
-              icon,
+              Icon(FontAwesomeIcons.caretRight)
             ],
           ),
         ),
