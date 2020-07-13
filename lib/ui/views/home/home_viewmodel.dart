@@ -2,6 +2,7 @@ import 'package:bltCinemas/app/locator.dart';
 import 'package:bltCinemas/app/router.gr.dart';
 import 'package:bltCinemas/model/bottom_menu_items_model.dart';
 import 'package:bltCinemas/services/auth_service.dart';
+import 'package:bltCinemas/ui/views/articles/articles_view.dart';
 import 'package:bltCinemas/ui/views/dashboard/dashboard_view.dart';
 import 'package:bltCinemas/ui/views/films/films_view.dart';
 import 'package:bltCinemas/ui/views/login/login_view.dart';
@@ -35,7 +36,7 @@ class HomeViewModel extends IndexTrackingViewModel {
     BottomMenuItemModel(
       icon: Icon(FontAwesomeIcons.newspaper),
       title: 'Articles',
-      view: LoginView(),
+      view: ArticlesView(),
     )
   ];
 

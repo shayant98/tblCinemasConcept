@@ -11,6 +11,7 @@ class ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<ProfileViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
+          resizeToAvoidBottomPadding: false,
           appBar: AppBar(
             elevation: 0,
             title: Text("PROFILE"),
@@ -71,16 +72,97 @@ class ProfileView extends StatelessWidget {
                                   size: 18,
                                 ),
                                 title: Text("Scan QR code"),
-                                onTap: () {},
+                                onTap: () {
+                                  model.initScan();
+                                },
                               ),
                               ListTile(
                                 leading: Icon(
-                                  FontAwesomeIcons.pen,
+                                  FontAwesomeIcons.creditCard,
                                   size: 18,
                                 ),
-                                title: Text("Write code"),
+                                title: Text("Add Credit via code"),
                                 onTap: () {
-                                  model.addCredit(50);
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) {
+                                        return Dialog(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0)),
+                                          child: Container(
+                                            padding: EdgeInsets.all(20),
+                                            height: 200,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "Add credit",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline6,
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                TextField(
+                                                  controller: model
+                                                      .codeInputEditingController,
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                  autofocus: true,
+                                                  decoration: InputDecoration(
+                                                    labelText: "Code",
+                                                    hintText: "000-000-0000",
+                                                    fillColor: Colors.white,
+                                                    border: OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                      borderSide: BorderSide(),
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: <Widget>[
+                                                    FlatButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Text(
+                                                        "CANCEL",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .button,
+                                                      ),
+                                                    ),
+                                                    FlatButton(
+                                                      color: Colors.orange[600],
+                                                      onPressed: () {
+                                                        model.addCreditByCode();
+                                                      },
+                                                      child: Text(
+                                                        "ADD",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .button,
+                                                      ),
+                                                    )
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      });
                                 },
                               )
                             ],
@@ -115,13 +197,13 @@ class ProfileView extends StatelessWidget {
                       title: "Edit profile",
                       icon: FontAwesomeIcons.userEdit,
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    ActionButton(
-                        title: "Logout",
-                        onpressed: model.logout,
-                        icon: FontAwesomeIcons.signOutAlt),
+                    // SizedBox(
+                    //   height: 20,
+                    // ),
+                    // ActionButton(
+                    //     title: "Logout",
+                    //     onpressed: model.logout,
+                    //     icon: FontAwesomeIcons.signOutAlt),
                     SizedBox(
                       height: 20,
                     ),

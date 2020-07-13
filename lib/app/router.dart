@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route_annotations.dart';
+import 'package:bltCinemas/ui/views/articles/articles_view.dart';
 import 'package:bltCinemas/ui/views/category/category_view.dart';
 import 'package:bltCinemas/ui/views/films/films_view.dart';
 import 'package:bltCinemas/ui/views/home/home_view.dart';
@@ -23,4 +24,5 @@ class $Router {
   CategoryView categoryViewRoute;
   LoginView loginViewRoute;
   ProfileView profileViewRoute;
+  ArticlesView articlesViewRoute;
 }

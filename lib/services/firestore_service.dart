@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bltCinemas/model/article_model.dart';
 import 'package:bltCinemas/model/movie_model.dart';
 import 'package:bltCinemas/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,12 +11,16 @@ class FirestoreService {
       Firestore.instance.collection('movies');
   final CollectionReference _usersCollectionReference =
       Firestore.instance.collection('users');
+  final CollectionReference _articleCollectionReference =
+      Firestore.instance.collection('articles');
   final StreamController<List<Movie>> _moviesController =
       StreamController<List<Movie>>.broadcast();
   final StreamController<List<Movie>> _moviesByCategoryController =
       StreamController<List<Movie>>.broadcast();
   final StreamController<User> _userController =
       StreamController<User>.broadcast();
+  final StreamController<List<Article>> _articlesController =
+      StreamController<List<Article>>.broadcast();
 
   Stream listenToMoviesStream() {
     _moviesCollectionReference.snapshots().listen((moviesSnapshot) {
@@ -77,7 +82,7 @@ class FirestoreService {
     }
   }
 
-  addCreditsToUser(String uid, double creditAmmount) async {
+  Future addCreditsToUser(String uid, double creditAmmount) async {
     if (uid != null) {
       DocumentReference userRef = _usersCollectionReference.document(uid);
       DocumentSnapshot userSnapshot = await userRef.get();
@@ -93,5 +98,23 @@ class FirestoreService {
       _userController.add(userData);
     });
     return _userController.stream;
+  }
+
+  Stream listenToArticlesStream() {
+    _articleCollectionReference.snapshots().listen((articleSnapshot) {
+      if (articleSnapshot.documents.isNotEmpty) {
+        var articles = articleSnapshot.documents
+            .map<Article>((snapshot) => Article.fromMap(snapshot))
+            .where((article) =>
+                article.title != null &&
+                article.body != null &&
+                article.imageUrl != null)
+            .toList();
+
+        _articlesController.add(articles);
+      }
+    });
+
+    return _articlesController.stream;
   }
 }
