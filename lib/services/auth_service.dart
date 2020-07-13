@@ -52,6 +52,7 @@ class AuthService {
   logout() {
     _firebaseAuth.signOut();
     _googleSignIn.disconnect();
+    _currentUser = null;
   }
 
   populateCurrentUser(FirebaseUser user) {
