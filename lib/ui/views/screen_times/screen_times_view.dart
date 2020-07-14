@@ -57,12 +57,7 @@ class ScreenTimesView extends StatelessWidget {
                                       scrollDirection: Axis.horizontal,
                                       itemBuilder:
                                           (BuildContext context, int index) =>
-                                              TimeSlot(
-                                        startTime: DateTime.now()
-                                            .subtract(Duration(hours: 2)),
-                                        endTime: DateTime.now()
-                                            .add(Duration(hours: 3)),
-                                      ),
+                                              TimeSlotWidget(),
                                       itemCount: 3,
                                       separatorBuilder:
                                           (BuildContext context, int index) =>

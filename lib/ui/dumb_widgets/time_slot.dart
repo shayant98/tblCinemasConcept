@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class TimeSlot extends StatelessWidget {
-  final DateTime startTime;
-  final DateTime endTime;
+class TimeSlotWidget extends StatelessWidget {
+  final String startTime;
+  final String endTime;
   final String type;
 
-  const TimeSlot({this.startTime, this.type, this.endTime});
+  const TimeSlotWidget({this.startTime, this.type, this.endTime});
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +14,13 @@ class TimeSlot extends StatelessWidget {
       onLongPress: () {
         showModalBottomSheet(context: context, builder: (_) => Container());
       },
-      onTap: () {
-        if (endTime.isBefore(DateTime.now())) {
-          print("NO");
-        } else {
-          print("YES");
-        }
-      },
+      // onTap: () {
+      //   if (endTime.isBefore(DateTime.now())) {
+      //     print("NO");
+      //   } else {
+      //     print("YES");
+      //   }
+      // },
       splashColor: Colors.orange[600],
       borderRadius: BorderRadius.circular(10),
       child: Container(
@@ -32,14 +32,14 @@ class TimeSlot extends StatelessWidget {
           children: <Widget>[
             RichText(
               text: TextSpan(
-                text: "${DateFormat('Hm').format(startTime)} - ",
+                text: "$startTime - ",
                 style: Theme.of(context)
                     .textTheme
                     .subtitle1
                     .copyWith(fontWeight: FontWeight.bold),
                 children: [
                   TextSpan(
-                      text: '${DateFormat('Hm').format(endTime)}',
+                      text: '$endTime',
                       style: Theme.of(context).textTheme.caption),
                 ],
               ),

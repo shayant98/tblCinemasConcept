@@ -1,6 +1,7 @@
 import 'package:bltCinemas/app/locator.dart';
 import 'package:bltCinemas/app/router.gr.dart';
 import 'package:bltCinemas/model/bottom_menu_items_model.dart';
+import 'package:bltCinemas/model/user_model.dart';
 import 'package:bltCinemas/services/auth_service.dart';
 import 'package:bltCinemas/ui/views/articles/articles_view.dart';
 import 'package:bltCinemas/ui/views/dashboard/dashboard_view.dart';
@@ -17,6 +18,7 @@ class HomeViewModel extends IndexTrackingViewModel {
   NavigationService _navigationService = locator<NavigationService>();
   AuthService _authService = locator<AuthService>();
 
+  User _currentUser;
   List<BottomMenuItemModel> _menuItems = [
     BottomMenuItemModel(
       icon: Icon(FontAwesomeIcons.home),
@@ -47,10 +49,19 @@ class HomeViewModel extends IndexTrackingViewModel {
   }
 
   void navigateToLoginOrProfile() async {
+    print(_authService.currentUser);
     if (_authService.currentUser == null) {
       await _navigationService.navigateTo(Routes.loginViewRoute);
     } else {
       await _navigationService.navigateTo(Routes.profileViewRoute);
+    }
+  }
+
+  init() async {
+    if (await _authService.isUserLoggedIn()) {
+      _currentUser = _authService.currentUser;
+    } else {
+      _currentUser = null;
     }
   }
 }

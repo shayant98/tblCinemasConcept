@@ -22,13 +22,19 @@ class ProfileView extends StatelessWidget {
                     SizedBox(
                       height: 20,
                     ),
-                    CircleAvatar(
-                      radius: 70,
-                      backgroundColor: Colors.orange,
-                      child: CircleAvatar(
-                        radius: 65,
-                        backgroundImage:
-                            CachedNetworkImageProvider(model.data.photoUrl),
+                    Container(
+                      padding: EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                          color: Colors.orange[600],
+                          borderRadius: BorderRadius.circular(400)),
+                      child: Hero(
+                        tag: 'profile-image',
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10000.0),
+                          child: CachedNetworkImage(
+                            imageUrl: model.data.photoUrl,
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -212,6 +218,27 @@ class ProfileView extends StatelessWidget {
                       onpressed: model.logout,
                       icon: FontAwesomeIcons.cog,
                     ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          FlatButton(
+                            onPressed: () => model.logout(),
+                            child: Text(
+                              "SIGN OUT",
+                              style:
+                                  Theme.of(context).textTheme.button.copyWith(
+                                        color: Colors.orange[600],
+                                      ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 )
               : Center(

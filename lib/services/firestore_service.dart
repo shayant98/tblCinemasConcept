@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bltCinemas/model/article_model.dart';
 import 'package:bltCinemas/model/movie_model.dart';
+import 'package:bltCinemas/model/overview_model.dart';
 import 'package:bltCinemas/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,6 +14,8 @@ class FirestoreService {
       Firestore.instance.collection('users');
   final CollectionReference _articleCollectionReference =
       Firestore.instance.collection('articles');
+  final CollectionReference _overviewCollectionReference =
+      Firestore.instance.collection('overview');
   final StreamController<List<Movie>> _moviesController =
       StreamController<List<Movie>>.broadcast();
   final StreamController<List<Movie>> _moviesByCategoryController =
@@ -21,7 +24,8 @@ class FirestoreService {
       StreamController<User>.broadcast();
   final StreamController<List<Article>> _articlesController =
       StreamController<List<Article>>.broadcast();
-
+  final StreamController<List<Overview>> _overviewController =
+      StreamController<List<Overview>>.broadcast();
   Stream listenToMoviesStream() {
     _moviesCollectionReference.snapshots().listen((moviesSnapshot) {
       if (moviesSnapshot.documents.isNotEmpty) {
@@ -37,7 +41,6 @@ class FirestoreService {
   }
 
   Stream listenToMoviesByCategoryStream(String category) {
-    print(category);
     bool isCategory = false;
     bool isNowShowing = false;
     bool isComingSoon = false;
@@ -116,5 +119,21 @@ class FirestoreService {
     });
 
     return _articlesController.stream;
+  }
+
+  Stream<List<Overview>> listenToOverViewStream(String date) {
+    _overviewCollectionReference
+        .document(date)
+        .snapshots()
+        .listen((overviewSnapshot) {
+      if (overviewSnapshot.exists) {
+        List<Overview> list = overviewSnapshot.data['movies']
+            .map<Overview>((movie) => Overview.fromMap(movie))
+            .toList();
+        _overviewController.add(list);
+      }
+    });
+
+    return _overviewController.stream;
   }
 }

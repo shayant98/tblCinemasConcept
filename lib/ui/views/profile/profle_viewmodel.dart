@@ -30,7 +30,7 @@ class ProfileViewModel extends StreamViewModel<User> {
   addCredit(ammount) async {
     if (ammount != null) {
       await _firestoreService.addCreditsToUser(
-          _authService.currentUser, ammount);
+          _authService.currentUser.id, ammount);
 
       _snackbarService.showCustomSnackBar(
           message: "Added \$$ammount to wallet",
@@ -67,5 +67,5 @@ class ProfileViewModel extends StreamViewModel<User> {
 
   @override
   Stream<User> get stream =>
-      _firestoreService.listenToUserStream(_authService.currentUser);
+      _firestoreService.listenToUserStream(_authService.currentUser.id);
 }

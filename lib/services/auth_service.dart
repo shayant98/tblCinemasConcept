@@ -9,8 +9,8 @@ class AuthService {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   FirestoreService _firestoreService = locator<FirestoreService>();
 
-  String _currentUser;
-  String get currentUser => _currentUser;
+  User _currentUser;
+  User get currentUser => _currentUser;
 
   Future<bool> isUserLoggedIn() async {
     var user = await _firebaseAuth.currentUser();
@@ -57,7 +57,12 @@ class AuthService {
 
   populateCurrentUser(FirebaseUser user) {
     if (user != null) {
-      _currentUser = user.uid;
+      _currentUser = User(
+        id: user.uid,
+        displayName: user.displayName,
+        photoUrl: user.photoUrl,
+        email: user.email,
+      );
     }
   }
 }

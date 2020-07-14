@@ -1,6 +1,7 @@
 import 'package:bltCinemas/model/bottom_menu_items_model.dart';
 import 'package:bltCinemas/ui/dumb_widgets/appbar_search.dart';
 import 'package:bltCinemas/ui/views/home/home_viewmodel.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stacked/stacked.dart';
@@ -51,6 +52,7 @@ class HomeView extends StatelessWidget {
         bottomNavigationBar: BottomNavigation(),
       ),
       viewModelBuilder: () => HomeViewModel(),
+      onModelReady: (model) => model.init(),
     );
   }
 }

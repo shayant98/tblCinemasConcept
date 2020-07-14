@@ -2,6 +2,7 @@ import 'package:bltCinemas/model/movie_model.dart';
 import 'package:bltCinemas/ui/dumb_widgets/time_slot.dart';
 import 'package:bltCinemas/ui/smart_widgets/movies_item/movie_item_view.dart';
 import 'package:bltCinemas/ui/views/overview/overview_viewmodel.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stacked/stacked.dart';
@@ -11,59 +12,67 @@ class OverviewView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<OverviewViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "OVERVIEW",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          elevation: 0,
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            model.goBack();
-          },
-          child: Icon(
-            FontAwesomeIcons.check,
-            color: Colors.white,
-          ),
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            DayList(),
-            SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                children: <Widget>[
-                  Icon(FontAwesomeIcons.infoCircle),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    model.showHalfOff ? "On Tuesdays 50% off" : '',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        .copyWith(fontWeight: FontWeight.bold),
-                  ),
-                ],
+          appBar: AppBar(
+            title: Text(
+              "OVERVIEW",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(
-              height: 20,
+            elevation: 0,
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              model.goBack();
+            },
+            child: Icon(
+              FontAwesomeIcons.check,
+              color: Colors.white,
             ),
-            Expanded(
-              child: MoviesList(),
-            ),
-          ],
-        ),
-      ),
+          ),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              DayList(),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: <Widget>[
+                    Icon(FontAwesomeIcons.infoCircle),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      model.showHalfOff ? "On Tuesdays 50% off" : '',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Expanded(
+                child: model.dataReady
+                    ? MoviesList()
+                    : Center(
+                        child: FutureBuilder(
+                            future: Future.delayed(Duration(seconds: 3)),
+                            builder: (_, snapshot) =>
+                                snapshot.connectionState == ConnectionState.done
+                                    ? Text("No movies found")
+                                    : CircularProgressIndicator())),
+              ),
+            ],
+          )),
       viewModelBuilder: () => OverviewViewModel(),
+      onModelReady: (model) => model.initialise(),
     );
   }
 }
@@ -149,35 +158,20 @@ class DayList extends ViewModelWidget<OverviewViewModel> {
   }
 }
 
-class MoviesList extends StatelessWidget {
-  const MoviesList({
-    Key key,
-  }) : super(key: key);
-
+class MoviesList extends ViewModelWidget<OverviewViewModel> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, OverviewViewModel model) {
     return ListView.separated(
-      itemBuilder: (BuildContext context, int index) {
+      itemBuilder: (BuildContext context, int movieIndex) {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Container(
-                height: 150,
-                child: MovieItemWidget(
-                  movie: Movie(
-                    id: "bleppppp",
-                    title: "the Lion King",
-                    desc:
-                        "This Disney animated feature follows the adventures of the young lion Simba (Jonathan Taylor Thomas), the heir of his father, Mufasa (James Earl Jones). Simba's wicked uncle, Scar (Jeremy Irons), plots to usurp Mufasa's throne by luring father and son into a stampede of wildebeests. But Simba escapes, and only Mufasa is killed. Simba returns as an adult (Matthew Broderick) to take back his homeland from Scar with the help of his friends Timon (Nathan Lane) and Pumbaa (Ernie Sabella).",
-                    nowShowing: true,
-                    comingSoon: false,
-                    poster: 'assets/images/lion_king.jpg',
-                    categories: ['action', 'kids', 'now showing'],
-                  ),
-                ),
-              ),
+                  height: 150,
+                  child: CachedNetworkImage(
+                      imageUrl: model.data[movieIndex].poster)),
               SizedBox(
                 width: 20,
               ),
@@ -186,7 +180,7 @@ class MoviesList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "The Lion King",
+                      model.data[movieIndex].title,
                       style: Theme.of(context)
                           .textTheme
                           .subtitle1
@@ -207,14 +201,16 @@ class MoviesList extends StatelessWidget {
                         // spacing: 30,
                         // runSpacing: 10,
                         scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context, int index) =>
-                            TimeSlot(
-                                startTime: DateTime.now(),
-                                endTime:
-                                    DateTime.now().add(Duration(hours: 2))),
-                        itemCount: 3,
-                        separatorBuilder: (BuildContext context, int index) =>
-                            SizedBox(
+                        itemBuilder: (BuildContext context, int slotIndex) =>
+                            TimeSlotWidget(
+                          startTime:
+                              model.data[movieIndex].slots[slotIndex].start,
+                          endTime: model.data[movieIndex].slots[slotIndex].end,
+                          type: model.data[movieIndex].slots[slotIndex].type,
+                        ),
+                        itemCount: model.data[movieIndex].slots.length,
+                        separatorBuilder:
+                            (BuildContext context, int slotIndex) => SizedBox(
                           width: 10,
                         ),
                       ),
@@ -226,7 +222,7 @@ class MoviesList extends StatelessWidget {
           ),
         );
       },
-      itemCount: 7,
+      itemCount: model.data.length,
       separatorBuilder: (BuildContext context, int index) => Divider(),
     );
   }
