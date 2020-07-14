@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route_annotations.dart';
 import 'package:bltCinemas/ui/views/articles/articles_view.dart';
 import 'package:bltCinemas/ui/views/category/category_view.dart';
+import 'package:bltCinemas/ui/views/email_login/email_login_view.dart';
+import 'package:bltCinemas/ui/views/email_register/email_register_view.dart';
 import 'package:bltCinemas/ui/views/films/films_view.dart';
 import 'package:bltCinemas/ui/views/home/home_view.dart';
 import 'package:bltCinemas/ui/views/login/login_view.dart';
@@ -25,4 +27,6 @@ class $Router {
   LoginView loginViewRoute;
   ProfileView profileViewRoute;
   ArticlesView articlesViewRoute;
+  EmailLoginView emailLoginViewRoute;
+  EmailRegisterView emailRegisterView;
 }

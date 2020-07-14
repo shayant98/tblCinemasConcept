@@ -28,6 +28,14 @@ class LoginViewModel extends BaseViewModel {
     await _navigationService.replaceWith(Routes.profileViewRoute);
   }
 
+  navigateToEmailLogin() async {
+    await _navigationService.navigateTo(Routes.emailLoginViewRoute);
+  }
+
+  navigateToEmailRegister() async {
+    await _navigationService.navigateTo(Routes.emailRegisterView);
+  }
+
   init() async {
     if (await _authService.isUserLoggedIn()) navigateToProfile();
   }

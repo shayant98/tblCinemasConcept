@@ -9,8 +9,8 @@ class AuthService {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   FirestoreService _firestoreService = locator<FirestoreService>();
 
-  User _currentUser;
-  User get currentUser => _currentUser;
+  String _currentUser;
+  String get currentUser => _currentUser;
 
   Future<bool> isUserLoggedIn() async {
     var user = await _firebaseAuth.currentUser();
@@ -49,20 +49,46 @@ class AuthService {
     }
   }
 
+  Future signUpWithEmail(
+      String name, String lastname, String email, String password) async {
+    try {
+      AuthResult authResult = await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password);
+
+      User user = User(
+        id: authResult.user.uid,
+        displayName: "$name $lastname",
+        email: "$email",
+        photoUrl: "https://picsum.photos/200/300",
+      );
+      _firestoreService.updateUser(user);
+      populateCurrentUser(authResult.user);
+      return authResult.user != null;
+    } catch (e) {
+      return e.message;
+    }
+  }
+
+  Future loginWithEmail(String email, String password) async {
+    try {
+      AuthResult authResult = await _firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
+      populateCurrentUser(authResult.user);
+      return authResult.user != null;
+    } catch (e) {
+      return e.message;
+    }
+  }
+
   logout() {
     _firebaseAuth.signOut();
     _googleSignIn.disconnect();
     _currentUser = null;
   }
 
-  populateCurrentUser(FirebaseUser user) {
+  void populateCurrentUser(FirebaseUser user) {
     if (user != null) {
-      _currentUser = User(
-        id: user.uid,
-        displayName: user.displayName,
-        photoUrl: user.photoUrl,
-        email: user.email,
-      );
+      _currentUser = user.uid;
     }
   }
 }

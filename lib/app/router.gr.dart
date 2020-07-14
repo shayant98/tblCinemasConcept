@@ -18,6 +18,8 @@ import 'package:bltCinemas/ui/views/category/category_view.dart';
 import 'package:bltCinemas/ui/views/login/login_view.dart';
 import 'package:bltCinemas/ui/views/profile/profile_view.dart';
 import 'package:bltCinemas/ui/views/articles/articles_view.dart';
+import 'package:bltCinemas/ui/views/email_login/email_login_view.dart';
+import 'package:bltCinemas/ui/views/email_register/email_register_view.dart';
 
 abstract class Routes {
   static const startupViewRoute = '/startup-view-route';
@@ -31,6 +33,8 @@ abstract class Routes {
   static const loginViewRoute = '/login-view-route';
   static const profileViewRoute = '/profile-view-route';
   static const articlesViewRoute = '/articles-view-route';
+  static const emailLoginViewRoute = '/email-login-view-route';
+  static const emailRegisterView = '/email-register-view';
   static const all = {
     startupViewRoute,
     homeViewRoute,
@@ -43,6 +47,8 @@ abstract class Routes {
     loginViewRoute,
     profileViewRoute,
     articlesViewRoute,
+    emailLoginViewRoute,
+    emailRegisterView,
   };
 }
 
@@ -110,6 +116,16 @@ class Router extends RouterBase {
       case Routes.articlesViewRoute:
         return MaterialPageRoute<dynamic>(
           builder: (context) => ArticlesView(),
+          settings: settings,
+        );
+      case Routes.emailLoginViewRoute:
+        return MaterialPageRoute<dynamic>(
+          builder: (context) => EmailLoginView(),
+          settings: settings,
+        );
+      case Routes.emailRegisterView:
+        return MaterialPageRoute<dynamic>(
+          builder: (context) => EmailRegisterView(),
           settings: settings,
         );
       default:

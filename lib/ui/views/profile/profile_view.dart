@@ -1,5 +1,6 @@
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:bltCinemas/ui/dumb_widgets/action_button.dart';
+import 'package:bltCinemas/ui/dumb_widgets/input_field.dart';
 import 'package:bltCinemas/ui/views/profile/profle_viewmodel.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -114,23 +115,9 @@ class ProfileView extends StatelessWidget {
                                                 SizedBox(
                                                   height: 10,
                                                 ),
-                                                TextField(
+                                                InputField(
                                                   controller: model
                                                       .codeInputEditingController,
-                                                  keyboardType:
-                                                      TextInputType.number,
-                                                  autofocus: true,
-                                                  decoration: InputDecoration(
-                                                    labelText: "Code",
-                                                    hintText: "000-000-0000",
-                                                    fillColor: Colors.white,
-                                                    border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10.0),
-                                                      borderSide: BorderSide(),
-                                                    ),
-                                                  ),
                                                 ),
                                                 SizedBox(
                                                   height: 10,

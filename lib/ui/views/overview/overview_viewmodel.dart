@@ -12,7 +12,7 @@ class OverviewViewModel extends StreamViewModel<List<Overview>> {
   FirestoreService _firestoreService = locator<FirestoreService>();
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;
-  int _dayCount = 3;
+  int _dayCount = 7;
   DateFormat dateFormat = DateFormat("ddMMyy");
   DateFormat listDateFormat = DateFormat("MMM dd yy");
   bool showHalfOff = false;

@@ -52,7 +52,6 @@ class HomeView extends StatelessWidget {
         bottomNavigationBar: BottomNavigation(),
       ),
       viewModelBuilder: () => HomeViewModel(),
-      onModelReady: (model) => model.init(),
     );
   }
 }

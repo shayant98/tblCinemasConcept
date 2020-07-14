@@ -14,64 +14,82 @@ class LoginView extends StatelessWidget {
           elevation: 0,
           title: Text("LOGIN"),
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: ListView(
-            children: <Widget>[
-              Image(image: AssetImage('assets/images/movie_image.png')),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                "Login to buy tickets, save movies for later",
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              ActionButton(
-                title: "Login with email",
-                icon: FontAwesomeIcons.envelope,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Center(child: Text("Or sign in with")),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  CircularButton(
-                    icon: Icon(
-                      FontAwesomeIcons.google,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: <Widget>[
+                Image(
+                  image: AssetImage('assets/images/movie_image.png'),
+                  width: 350,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam porttitor felis justo. ",
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                ActionButton(
+                  title: "Login with email",
+                  icon: FontAwesomeIcons.envelope,
+                  onpressed: model.navigateToEmailLogin,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Center(child: Text("Or sign in with")),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    CircularButton(
+                      icon: Icon(
+                        FontAwesomeIcons.google,
+                      ),
+                      onPressed: model.googleLogIn,
                     ),
-                    onPressed: model.googleLogIn,
+                    SizedBox(
+                      width: 20,
+                    ),
+                    CircularButton(
+                      icon: Icon(FontAwesomeIcons.facebookF),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Center(
+                    child: FlatButton(
+                        onPressed: () {
+                          model.navigateToEmailRegister();
+                        },
+                        child: Text(
+                          "Or create an account",
+                          style: Theme.of(context).textTheme.caption,
+                        ))),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Hero(
+                    tag: "tbl-logo",
+                    child: Image(
+                      image: AssetImage('assets/images/tbl.png'),
+                      width: 100,
+                    ),
                   ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  CircularButton(
-                    icon: Icon(FontAwesomeIcons.facebookF),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Center(
-                  child: FlatButton(
-                      onPressed: () {},
-                      child: Text(
-                        "Or create an account",
-                        style: Theme.of(context).textTheme.caption,
-                      ))),
-              SizedBox(
-                height: 20,
-              ),
-            ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+              ],
+            ),
           ),
         ),
       ),
