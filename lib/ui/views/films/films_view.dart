@@ -24,8 +24,14 @@ class FilmsView extends StatelessWidget {
                     for (var i = 0; i < model.categories.length; i++)
                       Column(
                         children: <Widget>[
+                          SizedBox(
+                            height: 20,
+                          ),
                           CategoryButtonView(
                             categoryName: model.categories[i],
+                          ),
+                          SizedBox(
+                            height: 10,
                           ),
                           buildMoviesCarousel(model.categories[i], model.data),
                         ],

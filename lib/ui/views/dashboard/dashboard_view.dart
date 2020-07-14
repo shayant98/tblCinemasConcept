@@ -36,9 +36,15 @@ class DashboardView extends StatelessWidget {
           CategoryButtonView(
             categoryName: 'Now Showing',
           ),
+          SizedBox(
+            height: 10,
+          ),
           (model.dataReady)
               ? MoviesCarousel(movies: model.data)
               : Text("Loading"),
+          SizedBox(
+            height: 10,
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(

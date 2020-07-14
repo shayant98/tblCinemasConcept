@@ -18,17 +18,22 @@ class MovieItemWidget extends StatelessWidget {
           },
           child: Container(
             width: MediaQuery.of(context).size.width * 0.33,
+            height: 150,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
             ),
-            child: CachedNetworkImage(
-              imageUrl: movie.poster,
-              placeholder: (context, url) => Center(
-                  child: LimitedBox(
-                maxHeight: 30,
-                child: CircularProgressIndicator(),
-              )),
-              errorWidget: (context, url, error) => Icon(Icons.error),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: CachedNetworkImage(
+                fit: BoxFit.cover,
+                imageUrl: movie.poster,
+                placeholder: (context, url) => Center(
+                    child: LimitedBox(
+                  maxHeight: 30,
+                  child: CircularProgressIndicator(),
+                )),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+              ),
             ),
           )),
       viewModelBuilder: () => MovieItemViewModel(),
