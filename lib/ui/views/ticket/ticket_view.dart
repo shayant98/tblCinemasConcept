@@ -15,7 +15,7 @@ class TicketView extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return Ticket();
           },
-          itemCount: 4,
+          itemCount: 1,
           separatorBuilder: (BuildContext context, int index) {
             return Divider();
           },
@@ -35,10 +35,10 @@ class Ticket extends ViewModelWidget<TicketViewModel> {
           context: context,
           builder: (_) => Container(
             decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20))),
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+            ),
             height: MediaQuery.of(context).size.height * 0.75,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -52,7 +52,7 @@ class Ticket extends ViewModelWidget<TicketViewModel> {
                 Text(
                   "987654321",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.black),
+                      fontWeight: FontWeight.bold, color: Colors.white),
                 )
               ],
             ),
@@ -65,7 +65,9 @@ class Ticket extends ViewModelWidget<TicketViewModel> {
           children: <Widget>[
             Container(
               decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                color: Color(0xFF363636),
+                borderRadius: BorderRadius.circular(20),
+              ),
               width: MediaQuery.of(context).size.width * 0.60,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -81,7 +83,7 @@ class Ticket extends ViewModelWidget<TicketViewModel> {
                         style: Theme.of(context)
                             .textTheme
                             .headline6
-                            .copyWith(color: Colors.black),
+                            .copyWith(color: Colors.white),
                       ),
                     ),
                     Text(
@@ -90,7 +92,7 @@ class Ticket extends ViewModelWidget<TicketViewModel> {
                       style: Theme.of(context)
                           .textTheme
                           .caption
-                          .copyWith(color: Colors.grey),
+                          .copyWith(color: Colors.white),
                     ),
                     Text(
                       "Horror",
@@ -98,26 +100,49 @@ class Ticket extends ViewModelWidget<TicketViewModel> {
                       style: Theme.of(context)
                           .textTheme
                           .caption
-                          .copyWith(color: Colors.grey),
+                          .copyWith(color: Colors.white),
                     ),
                     Divider(),
                     Row(
                       mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
                         InfoContainer(
                           title: "Date",
                           value: "23/12/20",
+                          subInfo: false,
                         ),
                         VerticalDivider(),
                         InfoContainer(
                           title: "Time",
                           value: "23:00",
+                          subInfo: false,
                         ),
                         VerticalDivider(),
                         InfoContainer(
                           title: "Screen",
                           value: "1",
+                          subInfo: false,
+                        ),
+                        VerticalDivider(),
+                      ],
+                    ),
+                    Divider(),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        InfoContainer(
+                          title: "Adult(s)",
+                          value: "2",
+                        ),
+                        InfoContainer(
+                          title: "Child(ren)",
+                          value: "2",
+                        ),
+                        InfoContainer(
+                          title: "PAID",
+                          value: "\$4333",
                         ),
                       ],
                     )
@@ -136,8 +161,9 @@ class Ticket extends ViewModelWidget<TicketViewModel> {
 class InfoContainer extends StatelessWidget {
   final String title;
   final String value;
-
-  const InfoContainer({@required this.title, @required this.value});
+  final bool subInfo;
+  const InfoContainer(
+      {@required this.title, @required this.value, this.subInfo});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -149,15 +175,20 @@ class InfoContainer extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .caption
-                .copyWith(color: Colors.grey),
+                .copyWith(color: Colors.white),
           ),
           Text(
             value,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context)
-                .textTheme
-                .headline6
-                .copyWith(color: Colors.black, fontWeight: FontWeight.bold),
+            style: (subInfo == false)
+                ? Theme.of(context)
+                    .textTheme
+                    .headline6
+                    .copyWith(color: Colors.white, fontWeight: FontWeight.bold)
+                : Theme.of(context)
+                    .textTheme
+                    .bodyText2
+                    .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ],
       ),
@@ -176,20 +207,21 @@ class QrCode extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(20)),
+            color: Color(0xFF363636), borderRadius: BorderRadius.circular(20)),
         child: Column(
           children: <Widget>[
             Center(
               child: Column(
                 children: <Widget>[
                   QrImage(
+                    foregroundColor: Colors.orange[600],
                     data: "Suck ya muda",
                     version: QrVersions.auto,
                   ),
                   Text(
                     "987654321",
                     style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.black),
+                        fontWeight: FontWeight.bold, color: Colors.white),
                   )
                 ],
               ),
@@ -199,7 +231,7 @@ class QrCode extends StatelessWidget {
               alignment: Alignment.bottomRight,
               child: Icon(
                 FontAwesomeIcons.expandArrowsAlt,
-                color: Colors.black,
+                color: Colors.white,
                 size: 21,
               ),
             )
