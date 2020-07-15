@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bltCinemas/model/article_model.dart';
 import 'package:bltCinemas/model/movie_model.dart';
-import 'package:bltCinemas/model/overview_model.dart';
+import 'package:bltCinemas/model/showing_model.dart';
 import 'package:bltCinemas/model/ticket_model.dart';
 import 'package:bltCinemas/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,8 +14,6 @@ class FirestoreService {
       Firestore.instance.collection('users');
   final CollectionReference _articleCollectionReference =
       Firestore.instance.collection('articles');
-  final CollectionReference _overviewCollectionReference =
-      Firestore.instance.collection('overview');
 
   final StreamController<List<Movie>> _moviesController =
       StreamController<List<Movie>>.broadcast();
@@ -25,11 +23,10 @@ class FirestoreService {
       StreamController<User>.broadcast();
   final StreamController<List<Article>> _articlesController =
       StreamController<List<Article>>.broadcast();
-  final StreamController<List<Overview>> _overviewController =
-      StreamController<List<Overview>>.broadcast();
   final StreamController<List<Ticket>> _ticketController =
       StreamController<List<Ticket>>.broadcast();
-
+  final StreamController<List<Showing>> _showingsController =
+      StreamController<List<Showing>>.broadcast();
   Stream listenToMoviesStream() {
     _moviesCollectionReference.snapshots().listen((moviesSnapshot) {
       if (moviesSnapshot.documents.isNotEmpty) {
@@ -74,6 +71,15 @@ class FirestoreService {
       }
     });
     return _moviesByCategoryController.stream;
+  }
+
+  Future<Movie> getMovieById(String id) async {
+    DocumentSnapshot snapshot =
+        await _moviesCollectionReference.document(id).get();
+    if (snapshot.exists) {
+      return Movie.fromMap(snapshot);
+    }
+    return null;
   }
 
   updateUser(User user) {
@@ -125,20 +131,21 @@ class FirestoreService {
     return _articlesController.stream;
   }
 
-  Stream<List<Overview>> listenToOverViewStream(String date) {
-    _overviewCollectionReference
-        .document(date)
+  Stream<List<Showing>> listenToShowingsStream(String date) {
+    Firestore.instance
+        .collectionGroup('showings')
+        .where('date', isEqualTo: date)
         .snapshots()
-        .listen((overviewSnapshot) {
-      if (overviewSnapshot.exists) {
-        List<Overview> list = overviewSnapshot.data['movies']
-            .map<Overview>((movie) => Overview.fromMap(movie))
+        .listen((showingsSnapshot) {
+      if (showingsSnapshot.documents.isNotEmpty) {
+        List<Showing> showings = showingsSnapshot.documents
+            .map<Showing>((snapshot) => Showing.fromMap(snapshot))
             .toList();
-        _overviewController.add(list);
+
+        _showingsController.add(showings);
       }
     });
-
-    return _overviewController.stream;
+    return _showingsController.stream;
   }
 
   Stream<List<Ticket>> listenToTicketsStream(String uid) {

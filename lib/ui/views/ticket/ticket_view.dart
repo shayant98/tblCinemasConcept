@@ -1,3 +1,4 @@
+import 'package:bltCinemas/model/ticket_model.dart';
 import 'package:bltCinemas/ui/views/ticket/ticket_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -8,27 +9,33 @@ class TicketView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<TicketViewModel>.reactive(
-      builder: (context, model, child) => Center(
-          child: Padding(
-        padding: const EdgeInsets.all(20),
+      builder: (context, model, child) => Padding(
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
         child: ListView.separated(
           itemBuilder: (BuildContext context, int index) {
-            return Ticket();
+            return TicketWidget(
+              ticket: model.data[index],
+            );
           },
-          itemCount: 1,
+          itemCount: (model.dataReady) ? model.data.length : 0,
           separatorBuilder: (BuildContext context, int index) {
-            return Divider();
+            return SizedBox(
+              height: 20,
+            );
           },
         ),
-      )),
+      ),
       viewModelBuilder: () => TicketViewModel(),
     );
   }
 }
 
-class Ticket extends ViewModelWidget<TicketViewModel> {
+class TicketWidget extends StatelessWidget {
+  final Ticket ticket;
+
+  const TicketWidget({@required this.ticket});
   @override
-  Widget build(BuildContext context, TicketViewModel model) {
+  Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         showModalBottomSheet(
@@ -44,15 +51,12 @@ class Ticket extends ViewModelWidget<TicketViewModel> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Center(
-                  child: QrImage(
-                    size: 250,
-                    data: "Suck ya muda",
-                  ),
+                  child: QrImage(size: 250, data: ticket.code),
                 ),
                 Text(
-                  "987654321",
+                  ticket.code,
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.white),
+                      fontWeight: FontWeight.bold, color: Colors.black),
                 )
               ],
             ),
@@ -78,7 +82,7 @@ class Ticket extends ViewModelWidget<TicketViewModel> {
                         width: 48, image: AssetImage('assets/images/tbl.png')),
                     Flexible(
                       child: Text(
-                        "The Lion King",
+                        ticket.title,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context)
                             .textTheme
@@ -109,19 +113,19 @@ class Ticket extends ViewModelWidget<TicketViewModel> {
                       children: <Widget>[
                         InfoContainer(
                           title: "Date",
-                          value: "23/12/20",
+                          value: ticket.date,
                           subInfo: false,
                         ),
                         VerticalDivider(),
                         InfoContainer(
                           title: "Time",
-                          value: "23:00",
+                          value: ticket.time,
                           subInfo: false,
                         ),
                         VerticalDivider(),
                         InfoContainer(
                           title: "Screen",
-                          value: "1",
+                          value: ticket.screen,
                           subInfo: false,
                         ),
                         VerticalDivider(),
@@ -134,23 +138,16 @@ class Ticket extends ViewModelWidget<TicketViewModel> {
                       children: <Widget>[
                         InfoContainer(
                           title: "Adult(s)",
-                          value: "2",
+                          value: ticket.adults,
                         ),
-                        InfoContainer(
-                          title: "Child(ren)",
-                          value: "2",
-                        ),
-                        InfoContainer(
-                          title: "PAID",
-                          value: "\$4333",
-                        ),
+                        InfoContainer(title: "Child(ren)", value: ticket.kids),
                       ],
                     )
                   ],
                 ),
               ),
             ),
-            QrCode(),
+            QrCode(code: ticket.code),
           ],
         ),
       ),
@@ -160,7 +157,7 @@ class Ticket extends ViewModelWidget<TicketViewModel> {
 
 class InfoContainer extends StatelessWidget {
   final String title;
-  final String value;
+  final value;
   final bool subInfo;
   const InfoContainer(
       {@required this.title, @required this.value, this.subInfo});
@@ -178,7 +175,7 @@ class InfoContainer extends StatelessWidget {
                 .copyWith(color: Colors.white),
           ),
           Text(
-            value,
+            "$value",
             overflow: TextOverflow.ellipsis,
             style: (subInfo == false)
                 ? Theme.of(context)
@@ -197,9 +194,11 @@ class InfoContainer extends StatelessWidget {
 }
 
 class QrCode extends StatelessWidget {
+  final String code;
+
   const QrCode({
-    Key key,
-  }) : super(key: key);
+    this.code,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -215,11 +214,11 @@ class QrCode extends StatelessWidget {
                 children: <Widget>[
                   QrImage(
                     foregroundColor: Colors.orange[600],
-                    data: "Suck ya muda",
+                    data: code,
                     version: QrVersions.auto,
                   ),
                   Text(
-                    "987654321",
+                    code,
                     style: TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.white),
                   )
@@ -227,12 +226,15 @@ class QrCode extends StatelessWidget {
               ),
             ),
             Spacer(),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Icon(
-                FontAwesomeIcons.expandArrowsAlt,
-                color: Colors.white,
-                size: 21,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: Icon(
+                  FontAwesomeIcons.expandArrowsAlt,
+                  color: Colors.white,
+                  size: 21,
+                ),
               ),
             )
           ],

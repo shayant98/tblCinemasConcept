@@ -59,7 +59,7 @@ class OverviewView extends StatelessWidget {
                 height: 20,
               ),
               Expanded(
-                child: model.dataReady
+                child: model.dataReady && !model.isBusy
                     ? MoviesList()
                     : Center(
                         child: FutureBuilder(
@@ -169,9 +169,7 @@ class MoviesList extends ViewModelWidget<OverviewViewModel> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Container(
-                  height: 150,
-                  child: CachedNetworkImage(
-                      imageUrl: model.data[movieIndex].poster)),
+                  child: MovieItemWidget(movie: model.data[movieIndex].movie)),
               SizedBox(
                 width: 20,
               ),
@@ -180,13 +178,15 @@ class MoviesList extends ViewModelWidget<OverviewViewModel> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      model.data[movieIndex].title,
+                      model.data[movieIndex].movie.title,
                       style: Theme.of(context)
                           .textTheme
                           .subtitle1
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
-                    Text("2h 15min",
+                    Text(
+                        "${model.data[movieIndex].movie.duration} minutes" ??
+                            '',
                         style: Theme.of(context).textTheme.caption),
                     Icon(
                       FontAwesomeIcons.accessibleIcon,
@@ -203,11 +203,8 @@ class MoviesList extends ViewModelWidget<OverviewViewModel> {
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (BuildContext context, int slotIndex) =>
                             TimeSlotWidget(
-                          startTime:
-                              model.data[movieIndex].slots[slotIndex].start,
-                          endTime: model.data[movieIndex].slots[slotIndex].end,
-                          type: model.data[movieIndex].slots[slotIndex].type,
-                        ),
+                                slot: model.data[movieIndex].slots[slotIndex],
+                                currentDate: model.selectedDate),
                         itemCount: model.data[movieIndex].slots.length,
                         separatorBuilder:
                             (BuildContext context, int slotIndex) => SizedBox(

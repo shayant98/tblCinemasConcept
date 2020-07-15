@@ -5,6 +5,7 @@ class Movie {
   final String title;
   final String desc;
   final String poster;
+  final int duration;
   final List<String> categories;
   final bool nowShowing;
   final bool comingSoon;
@@ -15,6 +16,7 @@ class Movie {
     this.title,
     this.poster,
     this.desc,
+    this.duration,
     this.categories,
     this.nowShowing,
     this.comingSoon,
@@ -26,6 +28,7 @@ class Movie {
         title: documentSnapshot.data['title'],
         poster: documentSnapshot.data['poster'],
         desc: documentSnapshot.data['description'],
+        duration: documentSnapshot.data['duration'],
         categories: documentSnapshot.data['categories'].cast<String>(),
         comingSoon: documentSnapshot.data['coming_soon'],
         nowShowing: documentSnapshot.data['now_showing'],

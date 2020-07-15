@@ -3,6 +3,7 @@ import 'package:bltCinemas/app/router.gr.dart';
 import 'package:bltCinemas/model/bottom_menu_items_model.dart';
 import 'package:bltCinemas/model/user_model.dart';
 import 'package:bltCinemas/services/auth_service.dart';
+import 'package:bltCinemas/services/firestore_service.dart';
 import 'package:bltCinemas/ui/views/articles/articles_view.dart';
 import 'package:bltCinemas/ui/views/dashboard/dashboard_view.dart';
 import 'package:bltCinemas/ui/views/films/films_view.dart';
@@ -17,6 +18,7 @@ import 'package:stacked_services/stacked_services.dart';
 class HomeViewModel extends IndexTrackingViewModel {
   NavigationService _navigationService = locator<NavigationService>();
   AuthService _authService = locator<AuthService>();
+  FirestoreService _firestoreService = locator<FirestoreService>();
 
   List<BottomMenuItemModel> _menuItems = [
     BottomMenuItemModel(
@@ -53,5 +55,9 @@ class HomeViewModel extends IndexTrackingViewModel {
     } else {
       await _navigationService.navigateTo(Routes.profileViewRoute);
     }
+  }
+
+  init() async {
+    _authService.isUserLoggedIn();
   }
 }

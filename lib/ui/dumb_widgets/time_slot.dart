@@ -1,12 +1,13 @@
+import 'package:bltCinemas/model/time_slot_model.dart';
+import 'package:bltCinemas/ui/dumb_widgets/flat_busy_button.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TimeSlotWidget extends StatelessWidget {
-  final String startTime;
-  final String endTime;
-  final String type;
+  final TimeSlot slot;
+  final DateTime currentDate;
 
-  const TimeSlotWidget({this.startTime, this.type, this.endTime});
+  const TimeSlotWidget({this.slot, this.currentDate});
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +15,79 @@ class TimeSlotWidget extends StatelessWidget {
       onLongPress: () {
         showModalBottomSheet(context: context, builder: (_) => Container());
       },
-      // onTap: () {
-      //   if (endTime.isBefore(DateTime.now())) {
-      //     print("NO");
-      //   } else {
-      //     print("YES");
-      //   }
-      // },
+      onTap: () {
+        showModalBottomSheet(
+            context: context,
+            builder: (_) => Container(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "Seats Left: ${slot.seats}",
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
+                      Divider(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            "Adult",
+                            style: Theme.of(context).textTheme.headline3,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              IconButton(
+                                icon: Icon(FontAwesomeIcons.minusCircle),
+                                onPressed: () {},
+                              ),
+                              Text(
+                                "0",
+                                style: Theme.of(context).textTheme.headline3,
+                              ),
+                              IconButton(
+                                icon: Icon(FontAwesomeIcons.plusCircle),
+                                onPressed: () {},
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                      Divider(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            "Kids",
+                            style: Theme.of(context).textTheme.headline3,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              IconButton(
+                                icon: Icon(FontAwesomeIcons.minusCircle),
+                                onPressed: () {},
+                              ),
+                              Text(
+                                "0",
+                                style: Theme.of(context).textTheme.headline3,
+                              ),
+                              IconButton(
+                                icon: Icon(FontAwesomeIcons.plusCircle),
+                                onPressed: () {},
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                      Spacer(),
+                      Align(
+                          alignment: Alignment.bottomRight,
+                          child: FlatBusyButton(
+                              isBusy: false, buttonLabel: "BUY TICKETS"))
+                    ],
+                  ),
+                ));
+      },
       splashColor: Colors.orange[600],
       borderRadius: BorderRadius.circular(10),
       child: Container(
@@ -32,21 +99,21 @@ class TimeSlotWidget extends StatelessWidget {
           children: <Widget>[
             RichText(
               text: TextSpan(
-                text: "$startTime - ",
+                text: "${slot.start} - ",
                 style: Theme.of(context)
                     .textTheme
                     .subtitle1
                     .copyWith(fontWeight: FontWeight.bold),
                 children: [
                   TextSpan(
-                      text: '$endTime',
+                      text: '${slot.end}',
                       style: Theme.of(context).textTheme.caption),
                 ],
               ),
             ),
             Container(
               child: Text(
-                type ?? '2D',
+                slot.type ?? '2D',
                 style: Theme.of(context).textTheme.bodyText2,
               ),
             )

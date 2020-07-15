@@ -1,13 +1,12 @@
-import 'dart:math';
-
 import 'package:bltCinemas/app/locator.dart';
-import 'package:bltCinemas/model/overview_model.dart';
+import 'package:bltCinemas/model/movie_model.dart';
+import 'package:bltCinemas/model/showing_model.dart';
 import 'package:bltCinemas/services/firestore_service.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-class OverviewViewModel extends StreamViewModel<List<Overview>> {
+class OverviewViewModel extends StreamViewModel<List<Showing>> {
   NavigationService _navigationService = locator<NavigationService>();
   FirestoreService _firestoreService = locator<FirestoreService>();
   int _selectedIndex = 0;
@@ -49,12 +48,18 @@ class OverviewViewModel extends StreamViewModel<List<Overview>> {
   }
 
   @override
-  Stream<List<Overview>> get stream => _firestoreService
-      .listenToOverViewStream(dateFormat.format(_selectedDate));
+  Stream<List<Showing>> get stream => _firestoreService
+      .listenToShowingsStream(dateFormat.format(_selectedDate));
 
   @override
-  void onError(error) {
-    print(error);
-    super.onError(error);
+  Future<void> onData(List<Showing> data) async {
+    setBusy(true);
+    for (var showing in data) {
+      Movie movie =
+          await runBusyFuture(_firestoreService.getMovieById(showing.parentId));
+      showing.movie = movie;
+    }
+    setBusy(false);
+    super.onData(data);
   }
 }

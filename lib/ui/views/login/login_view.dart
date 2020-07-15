@@ -58,9 +58,6 @@ class LoginView extends StatelessWidget {
                     SizedBox(
                       width: 20,
                     ),
-                    CircularButton(
-                      icon: Icon(FontAwesomeIcons.facebookF),
-                    ),
                   ],
                 ),
                 SizedBox(
