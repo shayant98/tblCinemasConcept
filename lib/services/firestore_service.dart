@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:bltCinemas/model/article_model.dart';
 import 'package:bltCinemas/model/movie_model.dart';
 import 'package:bltCinemas/model/overview_model.dart';
+import 'package:bltCinemas/model/ticket_model.dart';
 import 'package:bltCinemas/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class FirestoreService {
   final CollectionReference _moviesCollectionReference =
@@ -16,6 +16,7 @@ class FirestoreService {
       Firestore.instance.collection('articles');
   final CollectionReference _overviewCollectionReference =
       Firestore.instance.collection('overview');
+
   final StreamController<List<Movie>> _moviesController =
       StreamController<List<Movie>>.broadcast();
   final StreamController<List<Movie>> _moviesByCategoryController =
@@ -26,6 +27,9 @@ class FirestoreService {
       StreamController<List<Article>>.broadcast();
   final StreamController<List<Overview>> _overviewController =
       StreamController<List<Overview>>.broadcast();
+  final StreamController<List<Ticket>> _ticketController =
+      StreamController<List<Ticket>>.broadcast();
+
   Stream listenToMoviesStream() {
     _moviesCollectionReference.snapshots().listen((moviesSnapshot) {
       if (moviesSnapshot.documents.isNotEmpty) {
@@ -135,5 +139,24 @@ class FirestoreService {
     });
 
     return _overviewController.stream;
+  }
+
+  Stream<List<Ticket>> listenToTicketsStream(String uid) {
+    _usersCollectionReference
+        .document(uid)
+        .collection("tickets")
+        .snapshots()
+        .listen((ticketSnapshot) {
+      if (ticketSnapshot.documents.isNotEmpty) {
+        List<Ticket> tickets = ticketSnapshot.documents
+            .map<Ticket>((snapshot) => Ticket.fromMap(snapshot))
+            .where((ticket) => ticket.redeemed == false)
+            .toList();
+
+        _ticketController.add(tickets);
+      }
+    });
+
+    return _ticketController.stream;
   }
 }
