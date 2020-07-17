@@ -12,7 +12,7 @@ class OverviewViewModel extends StreamViewModel<List<Showing>> {
   int _selectedIndex = 0;
   int get selectedIndex => _selectedIndex;
   int _dayCount = 7;
-  DateFormat dateFormat = DateFormat("ddMMyy");
+  DateFormat dateFormat = DateFormat("dd/MM/yy");
   DateFormat listDateFormat = DateFormat("MMM dd yy");
   bool showHalfOff = false;
   int get dayCount => _dayCount;

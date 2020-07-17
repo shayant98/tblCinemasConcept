@@ -9,6 +9,7 @@ import 'package:bltCinemas/ui/views/login/login_view.dart';
 import 'package:bltCinemas/ui/views/movie/movie_view.dart';
 import 'package:bltCinemas/ui/views/overview/overview_view.dart';
 import 'package:bltCinemas/ui/views/profile/profile_view.dart';
+import 'package:bltCinemas/ui/views/purchase/purchase_view.dart';
 import 'package:bltCinemas/ui/views/screen_times/screen_times_view.dart';
 import 'package:bltCinemas/ui/views/startup/startup_view.dart';
 import 'package:bltCinemas/ui/views/ticket/ticket_view.dart';
@@ -28,5 +29,6 @@ class $Router {
   ProfileView profileViewRoute;
   ArticlesView articlesViewRoute;
   EmailLoginView emailLoginViewRoute;
-  EmailRegisterView emailRegisterView;
+  EmailRegisterView emailRegisterViewRoute;
+  PurchaseView purchaseViewModelRoute;
 }

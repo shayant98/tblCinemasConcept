@@ -1,5 +1,5 @@
 import 'package:bltCinemas/model/movie_model.dart';
-import 'package:bltCinemas/ui/dumb_widgets/time_slot.dart';
+import 'package:bltCinemas/ui/smart_widgets/time_slot/time_slot_view.dart';
 import 'package:bltCinemas/ui/smart_widgets/movies_item/movie_item_view.dart';
 import 'package:bltCinemas/ui/views/overview/overview_viewmodel.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -204,6 +204,7 @@ class MoviesList extends ViewModelWidget<OverviewViewModel> {
                         itemBuilder: (BuildContext context, int slotIndex) =>
                             TimeSlotWidget(
                                 slot: model.data[movieIndex].slots[slotIndex],
+                                movie: model.data[movieIndex].movie,
                                 currentDate: model.selectedDate),
                         itemCount: model.data[movieIndex].slots.length,
                         separatorBuilder:

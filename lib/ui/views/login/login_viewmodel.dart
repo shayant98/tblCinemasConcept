@@ -33,7 +33,7 @@ class LoginViewModel extends BaseViewModel {
   }
 
   navigateToEmailRegister() async {
-    await _navigationService.navigateTo(Routes.emailRegisterView);
+    await _navigationService.navigateTo(Routes.emailRegisterViewRoute);
   }
 
   init() async {

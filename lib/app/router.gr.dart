@@ -20,6 +20,8 @@ import 'package:bltCinemas/ui/views/profile/profile_view.dart';
 import 'package:bltCinemas/ui/views/articles/articles_view.dart';
 import 'package:bltCinemas/ui/views/email_login/email_login_view.dart';
 import 'package:bltCinemas/ui/views/email_register/email_register_view.dart';
+import 'package:bltCinemas/ui/views/purchase/purchase_view.dart';
+import 'package:bltCinemas/model/movie_model.dart';
 
 abstract class Routes {
   static const startupViewRoute = '/startup-view-route';
@@ -34,7 +36,8 @@ abstract class Routes {
   static const profileViewRoute = '/profile-view-route';
   static const articlesViewRoute = '/articles-view-route';
   static const emailLoginViewRoute = '/email-login-view-route';
-  static const emailRegisterView = '/email-register-view';
+  static const emailRegisterViewRoute = '/email-register-view-route';
+  static const purchaseViewModelRoute = '/purchase-view-model-route';
   static const all = {
     startupViewRoute,
     homeViewRoute,
@@ -48,7 +51,8 @@ abstract class Routes {
     profileViewRoute,
     articlesViewRoute,
     emailLoginViewRoute,
-    emailRegisterView,
+    emailRegisterViewRoute,
+    purchaseViewModelRoute,
   };
 }
 
@@ -62,6 +66,7 @@ class Router extends RouterBase {
 
   @override
   Route<dynamic> onGenerateRoute(RouteSettings settings) {
+    final args = settings.arguments;
     switch (settings.name) {
       case Routes.startupViewRoute:
         return MaterialPageRoute<dynamic>(
@@ -123,13 +128,36 @@ class Router extends RouterBase {
           builder: (context) => EmailLoginView(),
           settings: settings,
         );
-      case Routes.emailRegisterView:
+      case Routes.emailRegisterViewRoute:
         return MaterialPageRoute<dynamic>(
           builder: (context) => EmailRegisterView(),
+          settings: settings,
+        );
+      case Routes.purchaseViewModelRoute:
+        if (hasInvalidArgs<PurchaseViewArguments>(args)) {
+          return misTypedArgsRoute<PurchaseViewArguments>(args);
+        }
+        final typedArgs =
+            args as PurchaseViewArguments ?? PurchaseViewArguments();
+        return MaterialPageRoute<dynamic>(
+          builder: (context) => PurchaseView(
+              key: typedArgs.key, id: typedArgs.id, movie: typedArgs.movie),
           settings: settings,
         );
       default:
         return unknownRoutePage(settings.name);
     }
   }
+}
+
+// *************************************************************************
+// Arguments holder classes
+// **************************************************************************
+
+//PurchaseView arguments holder class
+class PurchaseViewArguments {
+  final Key key;
+  final String id;
+  final Movie movie;
+  PurchaseViewArguments({this.key, this.id, this.movie});
 }

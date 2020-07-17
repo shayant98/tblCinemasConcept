@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:bltCinemas/model/article_model.dart';
 import 'package:bltCinemas/model/movie_model.dart';
+import 'package:bltCinemas/model/parent_time_slot_model.dart';
 import 'package:bltCinemas/model/showing_model.dart';
 import 'package:bltCinemas/model/ticket_model.dart';
+import 'package:bltCinemas/model/time_slot_model.dart';
 import 'package:bltCinemas/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -14,6 +16,8 @@ class FirestoreService {
       Firestore.instance.collection('users');
   final CollectionReference _articleCollectionReference =
       Firestore.instance.collection('articles');
+  final CollectionReference _timeSlotCollectionReference =
+      Firestore.instance.collection('overview');
 
   final StreamController<List<Movie>> _moviesController =
       StreamController<List<Movie>>.broadcast();
@@ -27,6 +31,9 @@ class FirestoreService {
       StreamController<List<Ticket>>.broadcast();
   final StreamController<List<Showing>> _showingsController =
       StreamController<List<Showing>>.broadcast();
+  final StreamController<ParentTimeSlot> _timeSlotController =
+      StreamController<ParentTimeSlot>.broadcast();
+
   Stream listenToMoviesStream() {
     _moviesCollectionReference.snapshots().listen((moviesSnapshot) {
       if (moviesSnapshot.documents.isNotEmpty) {
@@ -165,5 +172,47 @@ class FirestoreService {
     });
 
     return _ticketController.stream;
+  }
+
+  Future<ParentTimeSlot> listenToTimeslotStream(String id) async {
+    DocumentSnapshot snapshot =
+        await _timeSlotCollectionReference.document(id).get();
+
+    if (snapshot.exists) return ParentTimeSlot.fromMap(snapshot);
+  }
+
+  Future<bool> createTicket(
+    String slotId,
+    String userId,
+    int kids,
+    int adult,
+    Movie movie,
+    String date,
+    String time,
+  ) async {
+    CollectionReference ticketCollection =
+        _usersCollectionReference.document(userId).collection("tickets");
+
+    Ticket ticket = Ticket(
+      showingId: slotId,
+      title: movie.title,
+      screen: 2,
+      time: time,
+      purchaseDate: Timestamp.now(),
+      kids: kids,
+      adults: adult,
+      redeemed: false,
+      date: date,
+      code: "TEST123",
+      categories: movie.categories,
+    );
+    try {
+      DocumentReference ticketRecord =
+          await ticketCollection.add(ticket.toJson());
+
+      return ticketRecord != null;
+    } catch (e) {
+      return e.message;
+    }
   }
 }

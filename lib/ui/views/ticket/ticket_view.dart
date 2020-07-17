@@ -64,7 +64,7 @@ class TicketWidget extends StatelessWidget {
         );
       },
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.25,
+        height: 230,
         child: Row(
           children: <Widget>[
             Container(

@@ -58,6 +58,8 @@ dependencies:
   #icons
   font_awesome_flutter: ^8.8.1
 
+  local_auth: ^0.6.2+3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

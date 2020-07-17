@@ -1,5 +1,5 @@
 import 'package:bltCinemas/model/movie_model.dart';
-import 'package:bltCinemas/ui/dumb_widgets/time_slot.dart';
+import 'package:bltCinemas/ui/smart_widgets/time_slot/time_slot_view.dart';
 import 'package:bltCinemas/ui/smart_widgets/movies_item/movie_item_view.dart';
 import 'package:bltCinemas/ui/views/screen_times/screen_times_viewmodel.dart';
 import 'package:flutter/material.dart';

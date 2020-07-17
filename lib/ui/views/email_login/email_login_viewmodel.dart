@@ -56,7 +56,7 @@ class EmailLoginViewModel extends BaseViewModel {
   }
 
   navigateToSignUp() async {
-    await _navigationService.navigateTo(Routes.emailRegisterView);
+    await _navigationService.navigateTo(Routes.emailRegisterViewRoute);
   }
 
   navigateToProfile() async {
