@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:bltCinemas/model/article_model.dart';
 import 'package:bltCinemas/model/movie_model.dart';
@@ -175,13 +176,17 @@ class FirestoreService {
   }
 
   Future<ParentTimeSlot> listenToTimeslotStream(String id) async {
-    DocumentSnapshot snapshot =
-        await _timeSlotCollectionReference.document(id).get();
+    try {
+      DocumentSnapshot snapshot =
+          await _timeSlotCollectionReference.document(id).get();
 
-    if (snapshot.exists) return ParentTimeSlot.fromMap(snapshot);
+      if (snapshot.exists) return ParentTimeSlot.fromMap(snapshot);
+    } catch (e) {
+      print(e);
+    }
   }
 
-  Future<bool> createTicket(
+  Future createTicket(
     String slotId,
     String userId,
     int kids,
@@ -190,29 +195,75 @@ class FirestoreService {
     String date,
     String time,
   ) async {
-    CollectionReference ticketCollection =
-        _usersCollectionReference.document(userId).collection("tickets");
-
-    Ticket ticket = Ticket(
-      showingId: slotId,
-      title: movie.title,
-      screen: 2,
-      time: time,
-      purchaseDate: Timestamp.now(),
-      kids: kids,
-      adults: adult,
-      redeemed: false,
-      date: date,
-      code: "TEST123",
-      categories: movie.categories,
-    );
     try {
+      int totalSeats = adult + kids;
+      bool seatsAvailable = await checkSeating(slotId, totalSeats);
+      if (!seatsAvailable) {
+        throw Exception("Not enough seats available");
+      }
+
+      CollectionReference ticketCollection =
+          _usersCollectionReference.document(userId).collection("tickets");
+
+      String code = _createRandomString();
+      // DO NOT IMPLEMENT THIS IN PROD => SCALE IS EXPONENTIAL -- Read^n
+      //Create seperate doc with cloud fucntions with all currently taken codes -- Read^1
+      while (await checkIfTicketCodeIsUnique(code)) {
+        _createRandomString();
+      }
+
+      Ticket ticket = Ticket(
+        showingId: slotId,
+        title: movie.title,
+        screen: 2,
+        time: time,
+        purchaseDate: Timestamp.now(),
+        kids: kids,
+        adults: adult,
+        redeemed: false,
+        date: date,
+        code: code,
+        categories: movie.categories,
+      );
+
       DocumentReference ticketRecord =
           await ticketCollection.add(ticket.toJson());
+
+      updateSeating(slotId, totalSeats);
 
       return ticketRecord != null;
     } catch (e) {
       return e.message;
     }
+  }
+
+  String _createRandomString() {
+    String code = Random.secure().nextInt(999999999).toString();
+    if (code.length < 9) {
+      code.padLeft(9, '0');
+    }
+    return code;
+  }
+
+  Future<bool> checkIfTicketCodeIsUnique(String code) async {
+    QuerySnapshot snapshot = await Firestore.instance
+        .collectionGroup('tickets')
+        .where("code", isEqualTo: code)
+        .getDocuments();
+
+    return snapshot.documents.isNotEmpty; //returns true if code found
+  }
+
+  Future<bool> checkSeating(String id, int seats) async {
+    DocumentReference timeslotRef = _timeSlotCollectionReference.document(id);
+    DocumentSnapshot snapshot = await timeslotRef.get();
+
+    return snapshot.data['seats'] - seats >= 0;
+  }
+
+  Future updateSeating(String id, int seats) async {
+    DocumentReference timeslotRef = _timeSlotCollectionReference.document(id);
+    DocumentSnapshot snapshot = await timeslotRef.get();
+    timeslotRef.setData({"seats": snapshot.data['seats'] - seats}, merge: true);
   }
 }

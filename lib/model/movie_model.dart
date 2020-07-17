@@ -10,9 +10,11 @@ class Movie {
   final bool nowShowing;
   final bool comingSoon;
   final String comingSoonDate;
+  final bool adult;
 
   Movie({
     this.id,
+    this.adult,
     this.title,
     this.poster,
     this.desc,
@@ -32,5 +34,6 @@ class Movie {
         categories: documentSnapshot.data['categories'].cast<String>(),
         comingSoon: documentSnapshot.data['coming_soon'],
         nowShowing: documentSnapshot.data['now_showing'],
+        adult: documentSnapshot.data['adult'],
       );
 }

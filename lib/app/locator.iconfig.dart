@@ -11,6 +11,7 @@ import 'package:bltCinemas/ui/views/dashboard/dashboard_viewmodel.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:bltCinemas/ui/views/films/films_viewmodel.dart';
 import 'package:bltCinemas/services/firestore_service.dart';
+import 'package:bltCinemas/services/local_auth_service.dart';
 import 'package:bltCinemas/services/qrcode_service.dart';
 import 'package:get_it/get_it.dart';
 
@@ -24,6 +25,8 @@ void $initGetIt(GetIt g, {String environment}) {
       () => thirdPartyServicesModule.dialogService);
   g.registerLazySingleton<FirestoreService>(
       () => thirdPartyServicesModule.firestoreService);
+  g.registerLazySingleton<LocalAuthService>(
+      () => thirdPartyServicesModule.localAuthService);
   g.registerLazySingleton<NavigationService>(
       () => thirdPartyServicesModule.navigationService);
   g.registerLazySingleton<QRcodeService>(
@@ -45,6 +48,8 @@ class _$ThirdPartyServicesModule extends ThirdPartyServicesModule {
   DialogService get dialogService => DialogService();
   @override
   FirestoreService get firestoreService => FirestoreService();
+  @override
+  LocalAuthService get localAuthService => LocalAuthService();
   @override
   NavigationService get navigationService => NavigationService();
   @override
